@@ -1,0 +1,61 @@
+\chapter{Introduzione}
+\section{Ambiente}
+
+
+{\bfseries
+Molte volte c'è la necessità di scambiare informazioni segrete ad un gruppo di persone ben definito. Gli attuali metodi di crittografia largamente utilizzati necessitano di scambiare la propria chiave privata con tutti i vari membri del gruppo che riesce così a decriptare ogni messaggio criptato per questa chiave.
+
+Il nostro scopo è di sviluppare un metodo capace di fornire chiavi \emph{ad hoc} che permettano la decifratura solo se vengono rispettati dei parametri decisi da chi cripta il messaggio. In questo modo possiamo garantire l'accesso alle informazioni unicamente a gruppi ben mirati di persone.
+
+Vogliamo che il sistema ci garantisca di non ottenere chiavi ad accessi più deboli ma che si possano generare chiavi più forti partendo dalle proprie chiavi. ( es. $A $and $B$ e $B$ and $C$ non ci permette di creare una chiave $B$)
+ 
+\begin{itemize}
+\item Sviluppo storico della crittografia (breve) e spiegazione della necessità di metodi potenti di cifratura
+\item Idea del metodo crittografico KP-ABE
+\item Differenze da altri metodi
+\end{itemize}}
+
+\subsection{Finalità} 
+
+\textbf{Cosa vogliamo ottenere da questo metodo di crittografia?}
+
+
+
+\section{Strumenti algebrici}
+\begin{defi}
+Un gruppo ciclico e il suo generatore
+\end{defi}
+\textbf{Definizioni minime e spiegazione di cosa serve a noi. Piccola digressione sui gruppi sulle curve elittiche}
+
+\begin{defi}
+Sia $G_1,G_2$ gruppi ciclici di ordine $p,q$ primi. Sia $g$ un generatore.\\
+Sia $e : G_1 \times G_1 \rightarrow G_2$ una mappa bilineare con proprietà:
+\begin{enumerate}
+\item $e$ è bilineare rispetto al prodotto
+\[ \forall_{u,v \in G_1}, a,b \in \mathbb{Z}_p : e(u^a,v^b) = e(u,v)^{ab} \]
+\item $e$ è non degenere \[e(g,g) \neq 1\]
+\item $e$ è velocemente computabile
+\end{enumerate}
+\end{defi}
+\textbf{Qualche esempio magari in un qualche contesto ben fatto.}
+
+\begin{defi}
+Coefficente di Lagrange
+\[ \Delta_{i,s}(x) = \prod_{j\in S , j \neq i} \dfrac{x-j}{i-j} \]
+\end{defi}
+
+\begin{defi}
+Funzione di soglia : \href{http://www.contrib.andrew.cmu.edu/~ryanod/?p=856}{link per def.} 
+\end{defi}
+\textbf{Forse troppo generale. Esempio partendo da funzioni booleane.}
+
+
+\begin{prop}
+Legame
+\[\sum_z \Delta_{i,s_x^\prime(0)} = 1\]
+\end{prop}
+\textbf{Legame trovato, basta considerare delle proprietà dell'insieme su cui si fa la sommatoria}
+
+\begin{prop}
+Completamento di polinomi \textbf{che vengono utilizzati spesso e lasciati in maniera molto sbrigativa.} 
+\end{prop} 

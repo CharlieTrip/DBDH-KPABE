@@ -1,0 +1,70 @@
+\documentclass[10pt,a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=3cm]{geometry}
+
+\usepackage[numbers]{natbib}
+
+\usepackage{hyperref}
+\hypersetup{colorlinks, linkcolor=blue}
+
+
+\author{Carlo Brunetta}
+\title{Sis. Cri. Attributivo KP-ABE}
+
+
+
+
+
+\theoremstyle{plain}% default
+\newtheorem{thm}{Teorema}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposizione}
+\newtheorem{assu}[thm]{Assunzione}
+\newtheorem{cor}{Corollario}
+\theoremstyle{definition}
+\newtheorem{defi}{Definizione}[section]
+\newtheorem{conj}{Congettura}[section]
+\newtheorem{exmp}{Esempio}[section]
+\theoremstyle{remark}
+\newtheorem{oss}{Osservazione}
+\newtheorem*{note}{Nota}
+\newtheorem*{case}{Caso}
+
+\setcounter{secnumdepth}{3}
+
+\newcommand{\pk}{\textit{PK} } 
+\newcommand{\mk}{\textit{MK} }
+\newcommand{\evil}[1]{$\mathcal{#1}$}
+\DeclareMathOperator{\parent}{parent}
+\DeclareMathOperator{\att}{att}
+\DeclareMathOperator{\inde}{index}
+
+\DeclareMathOperator{\decrypt}{DecifraNodo}
+\DeclareMathOperator{\polysat}{PolySat}
+\DeclareMathOperator{\polyunsat}{PolyUnsat}
+
+\begin{document}
+
+\maketitle
+\newpage
+\tableofcontents
+
+\input{Introduzione.tex}
+
+\input{KPABE.tex}
+
+\input{Conclusioni.tex}
+
+
+
+% \bibliographystyle{plainnat}
+% \bibliography{biblio}
+
+
+\end{document}
