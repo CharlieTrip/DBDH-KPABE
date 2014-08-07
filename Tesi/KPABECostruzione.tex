@@ -23,7 +23,7 @@ Per semplificare il lavoro con gli alberi, definiamo delle funzioni:
 \item $\mathcal{T}_x$ : è il sottoalbero di \evil{T} con radice $x$ 
 \end{itemize}
 
-A questo punto, creiamo un algoritmo che ci permetta di verificare se un dato insieme di attributi ha possibilità d'accesso o meno nell'albero.
+A questo punto, creiamo un algoritmo che ci permetta di verificare se un dato insieme di attributi ha possibilità d'accesso o meno nell'albero.\\[1cm]
 
 \textbf{Soddisfare un albero d'accesso}\\
 Denotiamo con 
@@ -33,30 +33,41 @@ $\mathcal{T}_x(\gamma) = 1$ $\Leftrightarrow$ l'insieme d'attributi $\gamma$ sod
 Calcoliamo $\mathcal{T}_x(\gamma)$ in questo modo:
 \begin{description}
 \item[$x$ è una foglia :] \[\mathcal{T}_x(\gamma) = 1 \Leftrightarrow att(x) \in \gamma\]
-cioè è garantito l'accesso gli attributi della foglia sono presenti in $\gamma$
+cioè è garantito l'accesso se gli attributi della foglia sono presenti in $\gamma$
 \item[$x$ non è una foglia :] \[\mathcal{T}_x(\gamma) = 1  \Leftrightarrow \# \{x^\prime \text{ figli di } x \quad|\quad \mathcal{T}_{x^\prime}(\gamma) = 1  \} \geq k_x\]
 cioè viene garantito l'accesso unicamente se il numero di figli che autorizzano $\gamma$ sono almeno in numero la soglia del nodo $x$ 
 \end{description}
 
-Ora prendiamo un $G_1$ gruppo bilineare di ordine $p$ e sia $g$ un generatore di $G_1$.\\
-In aggiunta consideriamo $e : G_1 \times G_1 \rightarrow G_2$ la mappa bilineare. Un parametro di sicurezza $k$ determinerà la grandezza dei gruppi.\\
-Associamo ogni attributo ad un elemento di $\mathbb{Z}_p^*$.\\
 
-\begin{itemize}
-\item Creazione sistema: rispetto al nostro metodo
+Ora prendiamo un $G_1$ gruppo bilineare di ordine $p$ e sia $g$ un generatore di $G_1$.\\
+Un parametro di sicurezza $k$ determinerà la grandezza dei gruppi.\\
+In aggiunta consideriamo $e : G_1 \times G_1 \rightarrow G_2$ mappa bilineare che soddisfa :
+\begin{enumerate}
+\item $e$ è bilineare rispetto al prodotto
+\[ \forall_{u,v \in G_1}, a,b \in \mathbb{Z}_p : e(u^a,v^b) = e(u,v)^{ab} \]
+\item $e$ è non degenere \[e(g,g) \neq 1\]
+\item $e$ è velocemente computabile
+\end{enumerate}
+
+
+
+
+\textbf{Creazione sistema}
+
 \begin{description}
 \item[Impostazione :]Definiamo l'universo di attributi $\mathcal{U} = \{1,\cdots,n\}$. Ora, per ogni attributo $i \in \mathcal{U}$, scegliamo uniformemente a caso un elemento $t_i$ di $\mathbb{Z}_p$. Allo stesso modo prendiamo un $y$.\\
 I parametri pubblici \pk pubblicabili sono
-\[ T_1 = g^{t_1} , T_2 = g^{t_2} , \cdots , T_n = g^{t_n} , Y = e(g,g)^y \]
+\[ T_1 = g^{t_1} , T_2 = g^{t_2} , \cdots , T_n = g^{t_n} , Y = e(g,g)^y \]\label{pubchiavi}
 mentre la chiave principale è
 \[ t_1 , t_2 , \cdots , t_n , y \]
 \item[Criptare :] Partendo da $(M , \gamma, \text{ \pk })$, cripto $M \in G_2$ sotto un insieme di attributi $\gamma$ scegliendo un $s$ casualmente in $\mathbb{Z}_p$ e pubblico il testo cifrato come
 \[ E = (\gamma , E^\prime = MY^s , \{E_i = T_i^s \}_{i\in\gamma}) \]
-\item[Generazione chiavi :] Partendo da $( \mathcal{T} , MK )$, l'algoritmo ci fornisce una chiave capace di decifrare il messaggio rispetto a $\gamma$ se e solo se $\mathcal{T}(\gamma) = 1$.
+\item[Generazione chiavi :] Partendo da $( \mathcal{T} , MK )$, l'algoritmo ci fornisce una chiave capace di decifrare il messaggio rispetto a $\gamma$ se e solo se $\mathcal{T}(\gamma) = 1$ cioè $\gamma$ è un insieme di attributi autorizzato.
 \begin{enumerate}
-\item Scelgo un polinomio $q_x$ per ogni nodo di $x$ (incluse le foglie) dell'albero \evil{T}. I polinomi sono scelti dall'alto al basso (partendo quindi dalla radice).
+\item Scelgo un polinomio $q_x$ per ogni nodo $x$, incluse le foglie, dell'albero \evil{T}.\\
+I polinomi sono scelti dall'alto al basso, partendo quindi dalla radice.
 \item Per ogni nodo $x$, sia $d_x$ il grado del polinomio $q_x$ tale che $d_x = k_x - 1$ con $k_x$ valore di soglia del nodo.
-\item Per il nodo principale $r$, fissiamo $q_r(0) = y$ ed altri $d_r$ altri punti per completare la definizione del polinomio $q_r$.
+\item Per il nodo principale $r$, fissiamo $q_r(0) = y$ ed altri $d_r$ punti per completare la definizione del polinomio $q_r$.
 \item Per gli altri nodi, fissiamo $q_x(0) = q_{\parent(x)}(\inde(x))$ e scegliamo altri $d_x$ altri punti per completare il polinomio.
 \item Per ogni foglia $x$, ritorniamo all'utente la chiave di decriptazione
 \[ D_x = g^{\dfrac{q_x(0)}{t_i}} \qquad \text{ dove } i \in \att(x) \]
@@ -64,7 +75,7 @@ mentre la chiave principale è
 L'insieme di tutte le chiavi di sopra forma la chiave di decriptazione $D$
 \item[Decifrare :] Partendo da $(E,D)$.\\
 Definiamo il nostro metodo di decifrazione mediante un algoritmo ricorsivo:\\
-Sia $\decrypt( E = (\gamma,E^\prime,\{E_i\}_{i\in \gamma}), D , x )$ in un elemento di $G_2$ oppure $\perp$. Sia $i = \att(x)$.
+Sia $\decrypt( E = (\gamma,E^\prime,\{E_i\}_{i\in \gamma}), D , x )$ in un elemento di $G_2$ oppure non è permesso calcolarlo e lo indicheremo con $\perp$. Sia $i = \att(x)$.
 \begin{itemize}
 \item Se $x$ è una foglia
 \[ \decrypt(E,D,x) = \begin{cases}
@@ -72,7 +83,7 @@ e(D_x,E_i) = e(g^{\frac{q_x(0)}{t_i}},g^{s\cdot t_i}) = e(g,g)^{q_x(0) \cdot s} 
 \perp \qquad \text{ altrimenti}  
 \end{cases} \]
 \item Se $x$ non è una foglia :\\
-Per ogni nodo figlio $z$ di $x$, $F_z = \decrypt(E,D,z)$. Sia $S_x$ un insieme arbitrario di dimensione $k_x$ di figli $z$ tali che $F_z \neq \perp$.\\
+Per ogni nodo figlio $z$ di $x$, $F_z = \decrypt(E,D,z)$. Sia $S_x$\label{insiemedecript} un insieme arbitrario di dimensione $k_x$ di figli $z$ tali che $F_z \neq \perp$.\\
 Se non esiste alcun insieme di questo tipo, allora la funzione ritorna $\perp$. Altrimenti
 \begin{align*}
 F_x &= \prod_{z \in S_x} F_z^{\Delta_{i,S_x^\prime}(0)} \qquad \text{ dove }
@@ -82,12 +93,14 @@ S^\prime_x = \{ \inde(z) : z \in S_x \}
 \end{matrix}\\
 &= \prod_{z \in S_x} (e(g,g)^{s \cdot q_z(0)})^{\Delta_{i,S_x^\prime}(0)}\\
 &= \prod_{z \in S_x} (e(g,g)^{s \cdot q_{\parent(z)}(\inde(z))})^{\Delta_{i,S_x^\prime}(0)} \qquad \text{(per costruzione)}\\
-&= \prod_{z \in S_x} e(g,g)^{s \cdot q(i) \cdot \Delta_{i,S_x\prime}(0)}\\
-&= e(g,g)^{s \cdot q_x(0)} \qquad \text{(per interpolazione polinomiale)\textbf{ spiegare bene il passaggio nella premessa}}
+&= \prod_{z \in S_x} e(g,g)^{s \cdot q_x(i) \cdot \Delta_{i,S_x\prime}(0)}\\
+&= e(g,g)^{s \cdot q_x(0)} 
 \end{align*}
+Dove l'ultimo passaggio è stato svolto per interpolazione polinomiale \textbf{spiegare il passaggio}
+
 \item Per decifrare usiamo $\decrypt (E,D,r)$ dove $r$ è la radice dell'albero
 \end{itemize}
-Quel che si nota è che se soddisfiamo l'albero, $\decrypt (E,D,r) = e(g,g)^{ys} = Y^s$ e poiché $E^\prime = MY^s$, l'algoritmo semplicemente divide per $Y^s$ \textbf{(SPIEGARE bene questo passaggio)}
+Quel che si nota è che se soddisfiamo l'albero, $\decrypt (E,D,r) = e(g,g)^{ys} = Y^s$ e poiché $E^\prime = MY^s$, l'algoritmo semplicemente divide per $Y^s$ che ottiene dal calcolo e recupera il messaggio $M$.
 \end{description}
-\end{itemize}
+
 

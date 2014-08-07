@@ -1,235 +1,26 @@
-\chapter{KP-ABE}
-\section{Struttura generale}
+\chapter{Attributive Based Encription}
 
+ABE (Attributive Based Encription) è una famiglia di schemi di crittografia basati tutti sull'utilizzo di una mappa bilineare $g:G_1 \times G_2 \rightarrow G_3$ con i $G_i$ gruppi ciclici di ordine un primo.
 
-Per il nostro scopo, vogliamo creare una struttura capace di gestire gerarchie di attributi con diversi livelli di dettaglio. Partiamo così da un insieme di gruppi di persone, detti parties, $\{P_1, \cdots , P_n \}$ su cui possiamo costruire una gerarchia $\mathbb{A} \subseteq 2^{\{P_1,\cdots,P_n\}}$ che raccoglie le varie tipologie d'accesso che vogliamo garantire.\\
-\textbf{Spiegare meglio con un esempio di come vogliamo l'albero e spiegare il fatto che noi usiamo attributi}
-
-\begin{defi}
-Un \textbf{struttura d'accesso} è una collezione di sottoinsiemi non vuoti di parties, ad esempio $\mathbb{A} \subseteq 2^{\{ P_1,\cdots,P_n \}} \setminus \{ \emptyset \}$.\\
-Gli insiemi di $\mathbb{A}$ sono detti \textbf{insiemi autorizzati} e gli insiemi non in $\mathbb{A}$ sono detti \textbf{insiemi non autorizzati}.
-\end{defi}
-
-Siamo interessati ad una monotonia \textbf{cercare un modo semplice per spiegare il perché usare la monotonia}
-
-
-\begin{defi}
-Una collezione $\mathbb{A} \subseteq 2^{\{P_1,\cdots,P_n\}}$ è detta \textbf{monotona} se $\forall_{B,C \in \mathbb{A}}$ con $B \subseteq C$ e $B \in \mathbb{A}$ allora $C \in \mathbb{A}$.
-\end{defi}
-
-Nella nostra trattazione useremo sempre strutture d'accesso monotone.
-
-Uno schema ABE prevede 4 algoritmi:
-\begin{description}
-\item[Impostazione :] Algoritmo con in ingresso unicamente i parametri di sicurezza impliciti del sistema. Ritorna le chiavi publiche \pk e la chiave principale \mk.
-\item[Criptare :] Algoritmo che riceve un messaggio $m$, un insieme di attributi $\gamma$ e i parametri pubblici \pk. Ritorna il messaggio criptato $E$.
-\item[Generazione chiavi :] Algoritmo che partendo da una struttura d'accesso $\mathbb{A}$, la chiave principale \mk e le chiavi pubbliche , fornisce una chiave di decifrazione $D$.
-\item[Decifrare :]L'algoritmo riceve in input il messaggio criptato $E$ che è stato criptato in un insieme d'attributi $\gamma$, la chiave di decifrazione $D$ per l'accesso alla struttura $\mathbb{A}$ e i parametri pubblici \pk.\\
-Ritornerà il messaggio $M$ se $\gamma \in \mathbb{A}$
-\end{description}
-
-Per poter valutare la sicurezza del sistema, definiamo un modello \textbf{selective-set (game)} dove proviamo l'attacco su un testo in chiaro conosciuto.
-\begin{description}
-\item[Inizializzazione :] L'avversario \evil{E} dichiara l'insieme degli attributi $\gamma$ su cui vuole esser sfidato.
-\item[Impostazione :] Lo sfidato \evil{C} esegue il setup del sistema ABE e fornisce ad \evil{E} i parametri pubblici all'avversario.
-\item[Fase 1 :] \evil{E} ha il permesso di interrogare \evil{C} per tutte le chiavi private delle strutture $\mathbb{A}_j$ dove $\gamma \notin \mathbb{A}_j$ per ogni $j$
-\item[Sfida :] L'avversario \evil{E} invia due messaggi di ugual lunghezza $M_0$ ed $M_1$.\\
-\evil{C} lancia una moneta binaria $b$ e cripta il messaggio $M_b$ con $\gamma$. Il cifrato è mandato a \evil{E}.
-\item[Fase 2 :] Come fase 1.
-\item[Guess :] \evil{E} ritorna una risposta $b^\prime$ rispetto a $b$
-\end{description}
-
-In questo modo, il vantaggio in questo gioco di un avversario \evil{A} è definito come $\mathbb{P}(b = b^\prime) - \frac{1}{2}$.\\[0.5cm]
-
-
-
-Definiamo quindi
-\begin{defi}
-Un ABE è \textbf{sicuro} in un modello di sicurezza selective-set se ogni avversario a tempo polinomiale ha al massimo un vantaggio trascurabile nel gioco selective-set.
-\end{defi}
-
-\textbf{Un avversario a tempo polinomiale. Spiegare un po' il \emph{cosa} vuol dire}
-
-Il nostro obbiettivo è di dimostrare
-\begin{assu}[Decisionale Bilineare Diffie - Hellman]
-Siano $a,b,c,z \in \mathbb{Z}_p$ scelti casualmente e sia $g$ un generatore di $G_1$.\\
-Nessun algoritmo $\mathcal{B}$ a tempo polinomiale probabilistico può distinguere tra le tuple
-\[ (A = g^a , B = g^b , C = g^c , e(g,g)^{abc}) \qquad (A = g^a , B = g^b , C = g^c , e(g,g)^{z}) \]
-con al più un vantaggio trascurabile.\\
-Il vantaggio di $\mathcal{B}$ è
-\[ \left\lvert \mathbb{P}\left( \mathcal{B}(A,B,C,e(g,g)^{abc}) = 0 \right) - \mathbb{P}\left( \mathcal{B}(A,B,C,e(g,g)^{z}) = 0 \right) \right\rvert \]
-dove la probabilità è \emph{considerata} sulla scelta casuale di $a,b,c,z \in \mathbb{Z}_p$ e la scelta casuale di $\mathcal{B}$.
-\end{assu}
-
-
-\section{LSSS e MSP}
-
-\textbf{Sono metodi molto simili (ma diversi) al mio raccontati in maniera piuttosto generale nel paper. Il problema è che possono esser spiegati superficialmente nel loro criterio senza però dare niente di nuovo.}
-
-\section{KP-ABE}
-
-\subsection{Costruzione} 
-
-Le chiavi private sono identificate da una struttura d'accesso ad albero dove ogni nodo interno è una funzione di soglia e le foglie sono gli attributi. \textbf{(Spiegare come la logica And ed Or descrive il nostro albero)}.\\
-Un utente potrà decifrare un testo cifrato con una data chiave $\Leftrightarrow$ c'è un assegnamento dal cifrato ai nodi dell'albero tali che l'albero sia soddisfatto.\\[1cm]
-
-Sia \evil{T} un albero rappresentante la nostra struttura d'accesso.\\
-Ogni non-foglia dell'albero rappresenta una funzione di soglia, descritta dai suoi figli e da un valore di soglia. Se $num_x$ è il numero di figli di un dato nodo $x$ e $k_x$ e il suo valore di soglia, allora $0 < k_x \leq num_x$.\\
-Quando $k_x = 1$, la funzione agisce come un OR mentre per $k_x = num_x$ essa diventa una AND.\\
-Ogni foglia è descritta dal suo attributo e una soglia di $k_n = 1$.\\
-Nel nostro albero ci è possibile definire un ordine rispetto ai figli di un nodo $x$ che li ordina da $1$ a $num_x$. Questi indici sono univocamente assegnati ai nodi per ogni chiave d'accesso arbitraria.
-\\[0.5cm]
-
-Per semplificare il lavoro con gli alberi, definiamo:
+È possibile suddividere in due famiglie che si differenziano sul processo di autorizzazione delle chiavi di decifratura :
 \begin{itemize}
-\item $\parent(x)$ : ci ritorna il genitore del nodo $x$.
-\item $\att(x)$ : se $x$ è una foglia, ci fornisce il suo attributo.
-\item $\inde(x)$ : fornisce l'indice dell'ordine del nodo $x$ rispetto al genitore $\parent(x)$
-\item $\mathcal{T}_x$ : è il sottoalbero di \evil{T} con radice $x$ 
+	\item \textbf{{Chipertext Policy ABE}} :  Il messaggio cifrato contiene le regole d'autorizzazione. Questa viene concessa se la chiave private dell'utente soddisfa la policy d'autorizzazione del messaggio.
+	\item \textbf{Key Policy ABE} : La chiave dell'utente contiene le informazioni sulla policy d'autorizzazione. Il messaggio cifrato conterrà gli attributi necessari per permettere la decodifica.
 \end{itemize}
 
-\textbf{Soddisfare un albero d'accesso}\\
-Denotiamo con $\mathcal{T}_x(\gamma) = 1$ se un insieme d'attributi $\gamma$ soddisfa l'albero d'accesso $\mathcal{T}_x$.\\
-Calcoliamo $\mathcal{T}_x(\gamma)$ in questo modo:
-\begin{description}
-\item[$x$ non è una foglia :] \[\mathcal{T}_x(\gamma) = 1  \Leftrightarrow\left\lvert \{x^\prime \text{ figli di } x \quad|\quad \mathcal{T}_{x^\prime}(\gamma) = 1  \} \right\rvert \geq k_x\]
-\item[$x$ è una foglia :] \[\mathcal{T}_x(\gamma) = 1 \Leftrightarrow att(x) \in \gamma\]
-\end{description}
-
-Ora prendiamo un $G_1$ gruppo bilineare di ordine $p$ e sia $g$ un generatore di $G_1$.\\
-In aggiunta consideriamo $e : G_1 \times G_1 \rightarrow G_2$ la mappa bilineare. Un parametro di sicurezza $k$ determinerà la grandezza dei gruppi.\\
-Associamo ogni attributo ad un elemento di $\mathbb{Z}_p^*$.\\
-
+In entrambi i casi, possiamo caratterizzare\cite{maya3} queste famiglia in base ai gruppi su cui agisce la mappa bilineare :
 \begin{itemize}
-\item Creazione sistema: rispetto al nostro metodo
-\begin{description}
-\item[Impostazione :]Definiamo l'universo di attributi $\mathcal{U} = \{1,\cdots,n\}$. Ora, per ogni attributo $i \in \mathcal{U}$, scegliamo uniformemente a caso un elemento $t_i$ di $\mathbb{Z}_p$. Allo stesso modo prendiamo un $y$.\\
-I parametri pubblici \pk pubblicabili sono
-\[ T_1 = g^{t_1} , T_2 = g^{t_2} , \cdots , T_n = g^{t_n} , Y = e(g,g)^y \]
-mentre la chiave principale è
-\[ t_1 , t_2 , \cdots , t_n , y \]
-\item[Criptare :] Partendo da $(M , \gamma, \text{ \pk })$, cripto $M \in G_2$ sotto un insieme di attributi $\gamma$ scegliendo un $s$ casualmente in $\mathbb{Z}_p$ e pubblico il testo cifrato come
-\[ E = (\gamma , E^\prime = MY^s , \{E_i = T_i^s \}_{i\in\gamma}) \]
-\item[Generazione chiavi :] Partendo da $( \mathcal{T} , MK )$, l'algoritmo ci fornisce una chiave capace di decifrare il messaggio rispetto a $\gamma$ se e solo se $\mathcal{T}(\gamma) = 1$.
-\begin{enumerate}
-\item Scelgo un polinomio $q_x$ per ogni nodo di $x$ (incluse le foglie) dell'albero \evil{T}. I polinomi sono scelti dall'alto al basso (partendo quindi dalla radice).
-\item Per ogni nodo $x$, sia $d_x$ il grado del polinomio $q_x$ tale che $d_x = k_x - 1$ con $k_x$ valore di soglia del nodo.
-\item Per il nodo principale $r$, fissiamo $q_r(0) = y$ ed altri $d_r$ altri punti per completare la definizione del polinomio $q_r$.
-\item Per gli altri nodi, fissiamo $q_x(0) = q_{\parent(x)}(\inde(x))$ e scegliamo altri $d_x$ altri punti per completare il polinomio.
-\item Per ogni foglia $x$, ritorniamo all'utente la chiave di decriptazione
-\[ D_x = g^{\dfrac{q_x(0)}{t_i}} \qquad \text{ dove } i \in \att(x) \]
-\end{enumerate}
-L'insieme di tutte le chiavi di sopra forma la chiave di decriptazione $D$
-\item[Decifrare :] Partendo da $(E,D)$.\\
-Definiamo il nostro metodo di decifrazione mediante un algoritmo ricorsivo:\\
-Sia $\decrypt( E = (\gamma,E^\prime,\{E_i\}_{i\in \gamma}), D , x )$ in un elemento di $G_2$ oppure $\perp$. Sia $i = \att(x)$.
-\begin{itemize}
-\item Se $x$ è una foglia
-\[ \decrypt(E,D,x) = \begin{cases}
-e(D_x,E_i) = e(g^{\frac{q_x(0)}{t_i}},g^{s\cdot t_i}) = e(g,g)^{q_x(0) \cdot s} \qquad \text{ se } i \in \gamma \\
-\perp \qquad \text{ altrimenti}  
-\end{cases} \]
-\item Se $x$ non è una foglia :\\
-Per ogni nodo figlio $z$ di $x$, $F_z = \decrypt(E,D,z)$. Sia $S_x$ un insieme arbitrario di dimensione $k_x$ di figli $z$ tali che $F_z \neq \perp$.\\
-Se non esiste alcun insieme di questo tipo, allora la funzione ritorna $\perp$. Altrimenti
-\begin{align*}
-F_x &= \prod_{z \in S_x} F_z^{\Delta_{i,S_x^\prime}(0)} \qquad \text{ dove }
-\begin{matrix}
-i = \inde(x)\\
-S^\prime_x = \{ \inde(z) : z \in S_x \}
-\end{matrix}\\
-&= \prod_{z \in S_x} (e(g,g)^{s \cdot q_z(0)})^{\Delta_{i,S_x^\prime}(0)}\\
-&= \prod_{z \in S_x} (e(g,g)^{s \cdot q_{\parent(z)}(\inde(z))})^{\Delta_{i,S_x^\prime}(0)} \qquad \text{(per costruzione)}\\
-&= \prod_{z \in S_x} e(g,g)^{s \cdot q(i) \cdot \Delta_{i,S_x\prime}(0)}\\
-&= e(g,g)^{s \cdot q_x(0)} \qquad \text{(per interpolazione polinomiale)\textbf{ spiegare bene il passaggio nella premessa}}
-\end{align*}
-\item Per decifrare usiamo $\decrypt (E,D,r)$ dove $r$ è la radice dell'albero
-\end{itemize}
-Quel che si nota è che se soddisfiamo l'albero, $\decrypt (E,D,r) = e(g,g)^{ys} = Y^s$ e poiché $E^\prime = MY^s$, l'algoritmo semplicemente divide per $Y^s$ \textbf{(SPIEGARE bene questo passaggio)}
-\end{description}
-\end{itemize}
+	\item $G_1 = G_2$ e di ordine $q$ primo
+	\item $G_1 \neq G_2$ entrambi di ordine $q$ primo ed esiste un isomorfismo tra loro
+	\item $G_1 \neq G_2$ entrambi di ordine $q$ primo e non esiste un isomorfismo tra loro
+\end{itemize}	
+
+Utilizzeremo il primo tipo dove $G_1 = G_2$ ed entrambi di ordine $q$ primo in uno schema \textbf{Key Policy ABE}
 
 
+\input{KPABEStruttura.tex}
 
-\subsection{Assunzione Diffie - Hellman}
+\input{KPABECostruzione.tex}
 
-\begin{thm}
-Se un avversario può rompere il nostro schema in un modello ABE-SS, allora un simulatore può esser costruito per giocare al gioco D-BDH con un vantaggio non trascurabile.
-\begin{proof}
-Per dimostrare il teorema, supponiamo esista un avversario \evil{A} a tempo polinomiale che può rompere lo schema con un vantaggio $\epsilon$.\\
-Costruiamo quindi un simultore \evil{B} capace di giocare al gioco D-BDH con un vantaggio di $\epsilon / 2$ in questo modo :\\
-Facciamo scegliere allo sfidante i gruppi $G_1, G_2$ con una mappa $e$ efficente e un generatore $g$. Successivamente lancia una moneta $\mu$ di cui risultato non viene rivelato a \evil{B}.\\
-Se $ \mu = 0$ allora viene scelto $(A,B,C,Z) = (g^a,g^b,g^c,e(g,g)^{abc})$ altrimenti $(A,B,C,Z) = (g^a,g^b,g^c, e(g,g)^z)$ per dei valori $a,b,c,z$ casuali.\\
-Assumiamo l'insieme degli attributi \evil{U} definito.
+\input{KPABEDH.tex}
 
-\begin{description}
-\item[Inizializzazione :] Il simulatore \evil{B} esegue \evil{A}. \evil{A} decide l'insieme degli attributi $\gamma$ su cui vuol esser sfidato.
-\item[Setup :] Il simulatore \evil{B} fissa il parametro $Y= e(A,B) = e(g,g)^{ab}$.\\
-Per ogni $i \in \mathcal{U}$, viene fissato $T_i$ come :
-\begin{enumerate}
-\item Se $i \in \gamma$ allora si sceglie casualmente $r_i \in \mathbb{Z}_p$ e fissiamo $T_i = g^{r_i}$
-\item Altrimenti scegliamo casualmente $\beta_i$ e fissiamo $T_i = g^{\beta_i b} = B^{\beta_i}$
-\end{enumerate}
-Successivamente \evil{A} ritorna i parametri pubblici a \evil{B}
-\item[Fase 1 :] \evil{A} esegue richieste di chiavi corrispondenti ad ogni albero d'accesso \evil{T} tale che $\gamma$ non soddisfa \evil{T}.\\
-Supponiamo che \evil{A} faccia una richiesta per un albero \evil{T} dove $\mathcal{T}(\gamma) = 0$. Per generare la chiave, \evil{B} deve assegnare un polinomio $Q_x$ di grado $d_x$ per ogni nodo $x$ di \evil{T}.\\
-Definiamo quindi due casistiche :
-\begin{itemize}
-\item $\polysat (\mathcal{T}_x , \gamma, \lambda_x )$ : questa procedura viene eseguita se $\mathcal{T}_x(\gamma) = 1$ cioè viene soddisfatto l'albero. $\lambda_x$ è un valore in $\mathbb{Z}_p$.\\
-Per prima cosa fissiamo un polinomio $q_x$ di grado $d_x$ per il nodo radice $x$ tale che $q_x(0) = \lambda_x$ e setta in maniera casuale gli altri valori per completare $q_x$.\\
-Successivamente, per ogni figlio $x^\prime$ di $x$, viene richiamata la procedura $\polysat(\mathcal{T}_{x^\prime}, \gamma, q_x(\index(x^\prime))$ così da ottenere $q_{x^\prime} (0) = q_x (\index(x^\prime)$.
-\item $\polyunsat(\mathcal{T}_x, \gamma , g^{\lambda_x})$ : questa procedura viene eseguira se $\mathcal{T}_x (\gamma) = 0$ cioé quando non viene soddisfatto l'albero. $g^{\lambda_x} \in \mathbb{G}_1$.\\
-Viene fissato un polinomio $q_x$ di grado $d_x$ per il nodo $x$ tale che $q_x(0) = \lambda_x$. Siccome $\mathcal{T}_x(\gamma) = 0$, non più di $d_x$ figli soddisfa l'albero.\\
-Sia quindi $h_x \leq d_x$ il numero di figli che soddisfano l'albero in $x$ e per questi viene scelto a caso un $\lambda_{x^\prime} \in \mathbb{Z}_p$ e fissiamo $q_{x^\prime}(0) = \lambda_{x^\prime}$. Successivamente vengono fissati casualmente i restanti $d_x - h_x$ punti di $q_x$ per completare il polinomio.\\
-L'algoritmo procede nella definizione dei polinomi per ogni nodo figlio $x^\prime$ di $x$ come
-\begin{itemize}
-\item $\polysat(\mathcal{T}_{x^\prime} , \gamma , q_x(index(x^\prime)))$ se $x^\prime$ è un nodo soddisfacente $\gamma$. Da osservare che in questo caso siamo a conoscenza di $q_x(index(x^\prime))$.
-\item $\polysat(\mathcal{T}_{x^\prime} , \gamma , g^{q_x(index(x^\prime))})$ se $x^\prime$ non è un nodo soddisfacente $\gamma$. Da osservare che in questo caso siamo a conoscenza unicamente di $g^{q_x(index(x^\prime))}$ per interpolazione a partire da $g^{q_x(0)}$.
-\end{itemize}
-Osserviamo che anche in questo caso $q_{x^\prime}(0) = q_x(\index (x^\prime))$ per ogni nodo figlio $x^\prime$ di $x$.
-\end{itemize}
-Per fornire gli accessi alla struttura \evil{T}, il simulatore esegue $\polyunsat(\mathcal{T},\gamma,A)$ per definire un polinomio $q_x$ per ogni nodo $x$ di \evil{T}.\\
-Per ogni foglia $x$ di \evil{T} conosciamo $q_x$ completamente se $x$ soddisfa $\gamma$, altrimenti conosciamo unicamente $g^{q_x(0)}$. Inoltre $q_r(0) = a$.\\
-Il simulatore ora definisce $Q_x(\cdot) = b q_x( \cdot)$ per ogni nodo $x \in \mathcal{T}$. Osserviamo che così otteniamo $y = Q_r(0) = ab$. La chiave corrispondente per ogni foglia è data utilizzando il suo polinomio come segue. Sia $i = \att(x)$.
-\[ D_x = \begin{cases}
-g^{\frac{Q_x(0)}{t_i}} = g^{\frac{b q_x(0)}{r_i}} = B^{\frac{q_x(0)}{r_i}}  \qquad \text{ se } i \in \gamma\\
-g^{\frac{Q_x(0)}{t_i}} = g^{\frac{b q_x(0)}{b \beta_i}} = g^{\frac{q_x(0)}{\beta_i}} \qquad \text{ altrimenti}
-\end{cases} \]
-In questo modo il simulatore \evil{B} riesce a costruire le chiavi private per gli accessi alla struttura \evil{T}. Inoltre, la distribuzione delle chiavi private è identica a quella dello schema originale.
-\item[Sfida :] L'avversario \evil{A} invia due messaggi $m_0$ e $m_1$ al simulatore \evil{B}.\\
-\evil{B} lancia una moneta binaria equiprobabile $\nu$ e ritorna il cifrato di $m_\nu$ come
-\[ E = (\gamma , E^\prime = m_\nu Z , \{ E_i = C^{r_i} \}_{i \in \gamma} ) \]
-Se $\mu = 0$ allora $Z = e(g,g)^{abc}$. Inoltre abbiamo che $s = c$ cioé $Y^s = (e(g,g)^{ab})^c = e(g,g)^{abc}$ e $E_i = (g^{r_i})^c = C^{r_i}$. In questo modo otteniamo una valida cifratura del messaggio $m_\nu$.\\
-Se $\mu = 1$ allora $E^\prime = m_\nu e(g,g)^z$ è un elemento casuale di $\mathbb{G}_2$ e non è così possibile avere informazioni su $m_\nu$ data l'arbitrarietà di $z$.
-\item[Fase 2 :] Viene ripetuto quel che è stato fatto nella Fase 1.
-\item[Guess :] \evil{A} manta un ipotesi $\nu^\prime$ di $\nu$. Se $\nu^\prime = \nu$ allora \evil{B} ritornerà $\mu^\prime = 0$ per indicare che è stata data una BDH-tupla valida, $\mu^\prime = 1$ se la tupla è casuale.
-\end{description}
-
-Come si può vedere, la costruzione del simulatore è uguale a quella dello schema originale.\\[0.5cm]
-Nel caso $\mu = 1$, l'avversario non riceve informazioni su $\nu$. Quindi abbiamo che $\mathbb{P}[\nu \neq \nu^\prime | \mu = 1] = \frac{1}{2}$. Siccome \evil{A} cerca di indovinare $\mu^\prime = 1$ quando $\nu^\prime \neq \nu$, abbiamo che $\mathbb{P}[\mu = \mu^\prime| \mu = 1] = \frac{1}{2}$\\
-Se $\mu = 0$, \evil{A} vede il cifrato di $m_\nu$. Il vantaggio è $\epsilon$ dà ipotesi.\\
-Quindi $\mathbb{P}[\nu \neq \nu^\prime | \mu = 0] = \frac{1}{2} + \epsilon$. Siccome viene ipotizzato $ \mu = \mu^\prime$ quando $\nu \neq \nu^\prime$, abbiamo $\mathbb{P}[\mu = \mu^\prime | \mu = 1] = \frac{1}{2} + \epsilon$.\\
-A questo punto, il vantaggio medio di un simulatore che gioca al DBDH è 
-\[ \frac{1}{2} \mathbb{P}[\nu \neq \nu^\prime | \mu = 1] + \frac{1}{2}\mathbb{P}[\nu \neq \nu^\prime | \mu = 0] - \frac{1}{2}  = \frac{1}{2}\left( \frac{1}{2} + \epsilon \right) + \frac{1}{2}\frac{1}{2} - \frac{1}{2} = \frac{1}{2} \epsilon\]
-\end{proof}
-\end{thm}
-
-
-
-\textbf{Efficenza rispetto alla grandezza dei gruppi e metodo per rendere più \emph{leggero} il tutto (presente nel paper, è solo un raffinamento dell'insieme degli indici dell'albero che vengono presi nella decifrazione).}
-
-
-
-
-
-
-
-\section{Mondo allargato}
-\textbf{Nel paper è presente un sistema uguale che permette l'allargamento dell'universo con un metodo di inserimento di nuovi rami all'albero. Il tutto modifica i polinomi in maniera molto ottimizzata ma complica gli algoritmi. Si può o spiegare completamente (con algoritmi) o lasciare unicamente una traccia della differenza di lavoro sull'albero e non entrare nel dettaglio per i vari algoritmi.}
-% \subsection{Differenze}
-% \begin{itemize}
-% \item Funzioni per allargare l'albero 
-% \end{itemize}
-% \subsection{Definizioni}
-% \subsection{Costruzione struttura}
-% \subsection{Assunzione D-H}

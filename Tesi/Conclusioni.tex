@@ -1,7 +1,13 @@
 \chapter{Conclusioni}
-\section{Sicurezza}
-\textbf{Qualità sicurezza a discapito della difficoltà computazionale. Un possibile commento sulla possibile resa in opera del sistema.}
+
+\section{Sicurezza ed efficenza}
+
+L'enorme quantità di conti necessari per creare tutte le chiavi private, la necessita di utilizzare $S_x$ (\ref{insiemedecript}) che è arbitrario per definizione, comporta una complessità non indifferente, tutta lineare rispetto ai parametri $\gamma$ su cui costruiamo chiavi.\\
+
 \section{Breaking the code}
-\textbf{Accenni su un possibile modo per decifrare la struttura (necessità di utilizzo di un metodo di DiscreteLogarithm sui gruppi).}
-\section{Problemi aperti}
-\textbf{Sono presenti nel paper dei problemi aperti. Alcuni sono relativi ad altri paper della stessa famiglia di metodi ABE. Devo ancora valutare se si riescono a inserire senza inserire nuovi concetti rispetto a quelli che tratto.}
+
+Da definizione delle chiavi publiche (\ref{pubchiavi}) si potrebbe risalire al gruppo $G_1$ con un metodo dei logaritmi discreti.\\
+Per la costruzione della mappa bilineare, si può effettuare un analisi con il metodo dei logaritmi discreti anche su $G_2$ (usando i $e(g,g)$ e quel che si ottiene dalla mappa).\\
+La ``sicurezza'' nasce dal fatto che i pairing non banali utilizzati sono su curve elittiche il che rende il processo di logaritmo piuttosto più complesso rispetto all'usare $\mathbb{C}_p$ e un generatore.
+
+\textbf{Non saprei quanto si riesce a dire in più su questa parte.}

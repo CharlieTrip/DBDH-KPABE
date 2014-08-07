@@ -1,4 +1,4 @@
-\documentclass[10pt,a4paper]{report}
+\documentclass[a4paper,10pt, openright]{book}%{report}
 \usepackage[utf8]{inputenc}
 \usepackage[italian]{babel}
 \usepackage{amsmath}
@@ -6,17 +6,14 @@
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{graphicx}
-\usepackage[left=2cm,right=2cm,top=2cm,bottom=3cm]{geometry}
+%\usepackage[left=2cm,right=2cm,top=2cm,bottom=3cm]{geometry}
+\usepackage{bigfoot}
+\usepackage{bold-extra}
 
 \usepackage[numbers]{natbib}
 
 \usepackage{hyperref}
 \hypersetup{colorlinks, linkcolor=blue}
-
-
-\author{Carlo Brunetta}
-\title{Sis. Cri. Attributivo KP-ABE}
-
 
 
 
@@ -44,27 +41,88 @@
 \DeclareMathOperator{\parent}{parent}
 \DeclareMathOperator{\att}{att}
 \DeclareMathOperator{\inde}{index}
+\DeclareMathOperator{\num}{num}
 
 \DeclareMathOperator{\decrypt}{DecifraNodo}
 \DeclareMathOperator{\polysat}{PolySat}
 \DeclareMathOperator{\polyunsat}{PolyUnsat}
 
-\begin{document}
 
-\maketitle
+\begin{document}
+\frontmatter
+\begin{titlepage}
+\begin{center}
+{{\Large{\textsc{Università degli Studi di Trento}}}}
+\rule[0.1cm]{15.8cm}{0.1mm}
+\rule[0.5cm]{15.8cm}{0.6mm}
+{\small{\textsc { Dipartimento di Matematica \\
+Corso di Laurea in Matematica}}}
+\end{center}
+\begin{center}
+\begin{figure}[!htbp]
+\includegraphics[scale=0.35]{unitn.jpg} \centering 
+\centering
+\end{figure}
+\vspace{10mm}
+\begin{center}
+{\LARGE{\bf \-}}\\
+\vspace{3mm}
+{\LARGE\textbf{Attributive Based Encription}}\\
+\vspace{3mm}
+{\LARGE{\bf \-}}\\
+\vspace{3mm}
+{\LARGE{\bf --}}\\
+\vspace{7mm} {\large{\sc Elaborato Finale}}
+\end{center}
+\vfill
+\par
+\noindent
+\begin{minipage}[t]{0.47\textwidth}
+{\large{\sc Relatore: Prof.}\\
+{ \\ Andrea Caranti}}\\
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.47\textwidth}\raggedleft
+{\large{\sc Laureando:}\\ 
+\vspace{5mm} 
+{ Carlo Brunetta}}
+\end{minipage}
+\vspace{20mm}
+\begin{center}
+{\large{\sc Anno Accademico 2013/2014}}
+\end{center}
+\end{center}
+\end{titlepage}
+
+\thispagestyle{empty}
+
+\newpage
+\thispagestyle{empty}
+\begin{flushleft}
+\textit{Eventuale proposizione}\\
+\end{flushleft}
+\vspace*{3cm}
+\begin{flushright}
+Eventuale dedica
+\end{flushright}
+
 \newpage
 \tableofcontents
+\newpage
+\mainmatter
 
 \input{Introduzione.tex}
 
 \input{KPABE.tex}
 
+\input{Esempio.tex}
+
 \input{Conclusioni.tex}
 
 
 
-% \bibliographystyle{plainnat}
-% \bibliography{biblio}
+\bibliographystyle{plainnat}
+\bibliography{biblio}
 
 
 \end{document}

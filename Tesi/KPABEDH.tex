@@ -2,11 +2,13 @@
 \subsection{Assunzione Diffie - Hellman}
 
 \begin{thm}
-Se un avversario può rompere il nostro schema in un modello ABE-SS, allora un simulatore può esser costruito per giocare al gioco D-BDH con un vantaggio non trascurabile.
+Se un avversario può rompere lo schema in un modello ABE Selective-Set, allora un simulatore può esser costruito per giocare al gioco Decisional Bilinear Diffie Hellman con un vantaggio non trascurabile.
 \begin{proof}
 Per dimostrare il teorema, supponiamo esista un avversario \evil{A} a tempo polinomiale che può rompere lo schema con un vantaggio $\epsilon$.\\
-Costruiamo quindi un simultore \evil{B} capace di giocare al gioco D-BDH con un vantaggio di $\epsilon / 2$ in questo modo :\\
-Facciamo scegliere allo sfidante i gruppi $G_1, G_2$ con una mappa $e$ efficente e un generatore $g$. Successivamente lancia una moneta $\mu$ di cui risultato non viene rivelato a \evil{B}.\\
+Costruiamo quindi un simulatore \evil{B} capace di giocare al gioco D-BDH con un vantaggio di $\epsilon / 2$ in questo modo :\\[0,5cm]
+
+Facciamo scegliere allo sfidante i gruppi $G_1, G_2$ con una mappa $e$ efficente e un generatore $g$.\\
+Successivamente il simulatore lancia una moneta $\mu$ di cui risultato non viene rivelato allo sfidante.\\
 Se $ \mu = 0$ allora viene scelto $(A,B,C,Z) = (g^a,g^b,g^c,e(g,g)^{abc})$ altrimenti $(A,B,C,Z) = (g^a,g^b,g^c, e(g,g)^z)$ per dei valori $a,b,c,z$ casuali.\\
 Assumiamo l'insieme degli attributi \evil{U} definito.
 
@@ -20,49 +22,57 @@ Per ogni $i \in \mathcal{U}$, viene fissato $T_i$ come :
 \end{enumerate}
 Successivamente \evil{A} ritorna i parametri pubblici a \evil{B}
 \item[Fase 1 :] \evil{A} esegue richieste di chiavi corrispondenti ad ogni albero d'accesso \evil{T} tale che $\gamma$ non soddisfa \evil{T}.\\
-Supponiamo che \evil{A} faccia una richiesta per un albero \evil{T} dove $\mathcal{T}(\gamma) = 0$. Per generare la chiave, \evil{B} deve assegnare un polinomio $Q_x$ di grado $d_x$ per ogni nodo $x$ di \evil{T}.\\
+Supponiamo che \evil{A} faccia una richiesta per un albero \evil{T} dove $\mathcal{T}(\gamma) = 0$.\\
+Per generare la chiave, \evil{B} deve assegnare un polinomio $Q_x$ di grado $d_x$ per ogni nodo $x$ di \evil{T}.\\
 Definiamo quindi due casistiche :
 \begin{itemize}
 \item $\polysat (\mathcal{T}_x , \gamma, \lambda_x )$ : questa procedura viene eseguita se $\mathcal{T}_x(\gamma) = 1$ cioè viene soddisfatto l'albero. $\lambda_x$ è un valore in $\mathbb{Z}_p$.\\
 Per prima cosa fissiamo un polinomio $q_x$ di grado $d_x$ per il nodo radice $x$ tale che $q_x(0) = \lambda_x$ e setta in maniera casuale gli altri valori per completare $q_x$.\\
-Successivamente, per ogni figlio $x^\prime$ di $x$, viene richiamata la procedura $\polysat(\mathcal{T}_{x^\prime}, \gamma, q_x(\index(x^\prime))$ così da ottenere $q_{x^\prime} (0) = q_x (\index(x^\prime)$.
-\item $\polyunsat(\mathcal{T}_x, \gamma , g^{\lambda_x})$ : questa procedura viene eseguira se $\mathcal{T}_x (\gamma) = 0$ cioé quando non viene soddisfatto l'albero. $g^{\lambda_x} \in \mathbb{G}_1$.\\
+Successivamente, per ogni figlio $x^\prime$ di $x$, viene richiamata la procedura $\polysat(\mathcal{T}_{x^\prime}, \gamma, q_x(\inde(x^\prime))$ così da ottenere $q_{x^\prime} (0) = q_x (\inde(x^\prime))$.
+\item $\polyunsat(\mathcal{T}_x, \gamma , g^{\lambda_x})$ : questa procedura viene eseguita se $\mathcal{T}_x (\gamma) = 0$ cioé quando non viene soddisfatto l'albero. $g^{\lambda_x} \in \mathbb{G}_1$.\\
 Viene fissato un polinomio $q_x$ di grado $d_x$ per il nodo $x$ tale che $q_x(0) = \lambda_x$. Siccome $\mathcal{T}_x(\gamma) = 0$, non più di $d_x$ figli soddisfa l'albero.\\
 Sia quindi $h_x \leq d_x$ il numero di figli che soddisfano l'albero in $x$ e per questi viene scelto a caso un $\lambda_{x^\prime} \in \mathbb{Z}_p$ e fissiamo $q_{x^\prime}(0) = \lambda_{x^\prime}$. Successivamente vengono fissati casualmente i restanti $d_x - h_x$ punti di $q_x$ per completare il polinomio.\\
 L'algoritmo procede nella definizione dei polinomi per ogni nodo figlio $x^\prime$ di $x$ come
 \begin{itemize}
-\item $\polysat(\mathcal{T}_{x^\prime} , \gamma , q_x(index(x^\prime)))$ se $x^\prime$ è un nodo soddisfacente $\gamma$. Da osservare che in questo caso siamo a conoscenza di $q_x(index(x^\prime))$.
-\item $\polysat(\mathcal{T}_{x^\prime} , \gamma , g^{q_x(index(x^\prime))})$ se $x^\prime$ non è un nodo soddisfacente $\gamma$. Da osservare che in questo caso siamo a conoscenza unicamente di $g^{q_x(index(x^\prime))}$ per interpolazione a partire da $g^{q_x(0)}$.
+\item $\polysat(\mathcal{T}_{x^\prime} , \gamma , q_x(\inde(x^\prime)))$ se $x^\prime$ è un nodo soddisfacente $\gamma$.\\
+Da osservare che in questo caso siamo a conoscenza di $q_x(\inde(x^\prime))$.
+\item $\polyunsat(\mathcal{T}_{x^\prime} , \gamma , g^{q_x(\inde(x^\prime))})$ se $x^\prime$ non è un nodo soddisfacente $\gamma$.\\
+Da osservare che in questo caso siamo a conoscenza unicamente di $g^{q_x(\inde(x^\prime))}$ per interpolazione a partire da $g^{q_x(0)}$.
 \end{itemize}
-Osserviamo che anche in questo caso $q_{x^\prime}(0) = q_x(\index (x^\prime))$ per ogni nodo figlio $x^\prime$ di $x$.
+Osserviamo che anche in questo caso $q_{x^\prime}(0) = q_x(\inde (x^\prime))$ per ogni nodo figlio $x^\prime$ di $x$.
 \end{itemize}
 Per fornire gli accessi alla struttura \evil{T}, il simulatore esegue $\polyunsat(\mathcal{T},\gamma,A)$ per definire un polinomio $q_x$ per ogni nodo $x$ di \evil{T}.\\
-Per ogni foglia $x$ di \evil{T} conosciamo $q_x$ completamente se $x$ soddisfa $\gamma$, altrimenti conosciamo unicamente $g^{q_x(0)}$. Inoltre $q_r(0) = a$.\\
-Il simulatore ora definisce $Q_x(\cdot) = b q_x( \cdot)$ per ogni nodo $x \in \mathcal{T}$. Osserviamo che così otteniamo $y = Q_r(0) = ab$. La chiave corrispondente per ogni foglia è data utilizzando il suo polinomio come segue. Sia $i = \att(x)$.
+Per ogni foglia $x$ di \evil{T} conosciamo $q_x$ completamente se $x$ soddisfa $\gamma$, altrimenti conosciamo unicamente $g^{q_x(0)}$.\\
+Inoltre $q_r(0) = a$.\\
+Il simulatore ora definisce $Q_x(\cdot) = b q_x( \cdot)$ per ogni nodo $x \in \mathcal{T}$.\\
+Osserviamo che così otteniamo $y = Q_r(0) = ab$. La chiave corrispondente per ogni foglia è data utilizzando il suo polinomio come segue. Sia $i = \att(x)$.
 \[ D_x = \begin{cases}
 g^{\frac{Q_x(0)}{t_i}} = g^{\frac{b q_x(0)}{r_i}} = B^{\frac{q_x(0)}{r_i}}  \qquad \text{ se } i \in \gamma\\
 g^{\frac{Q_x(0)}{t_i}} = g^{\frac{b q_x(0)}{b \beta_i}} = g^{\frac{q_x(0)}{\beta_i}} \qquad \text{ altrimenti}
 \end{cases} \]
-In questo modo il simulatore \evil{B} riesce a costruire le chiavi private per gli accessi alla struttura \evil{T}. Inoltre, la distribuzione delle chiavi private è identica a quella dello schema originale.
+In questo modo il simulatore \evil{B} riesce a costruire le chiavi private per gli accessi alla struttura \evil{T}.
 \item[Sfida :] L'avversario \evil{A} invia due messaggi $m_0$ e $m_1$ al simulatore \evil{B}.\\
 \evil{B} lancia una moneta binaria equiprobabile $\nu$ e ritorna il cifrato di $m_\nu$ come
 \[ E = (\gamma , E^\prime = m_\nu Z , \{ E_i = C^{r_i} \}_{i \in \gamma} ) \]
-Se $\mu = 0$ allora $Z = e(g,g)^{abc}$. Inoltre abbiamo che $s = c$ cioé $Y^s = (e(g,g)^{ab})^c = e(g,g)^{abc}$ e $E_i = (g^{r_i})^c = C^{r_i}$. In questo modo otteniamo una valida cifratura del messaggio $m_\nu$.\\
+Se $\mu = 0$ allora $Z = e(g,g)^{abc}$.\\
+Da questo abbiamo che $s = c$ cioé $Y^s = (e(g,g)^{ab})^c = e(g,g)^{abc}$ e $E_i = (g^{r_i})^c = C^{r_i}$. Otteniamo quindi una valida cifratura del messaggio $m_\nu$.\\
 Se $\mu = 1$ allora $E^\prime = m_\nu e(g,g)^z$ è un elemento casuale di $\mathbb{G}_2$ e non è così possibile avere informazioni su $m_\nu$ data l'arbitrarietà di $z$.
 \item[Fase 2 :] Viene ripetuto quel che è stato fatto nella Fase 1.
-\item[Guess :] \evil{A} manta un ipotesi $\nu^\prime$ di $\nu$. Se $\nu^\prime = \nu$ allora \evil{B} ritornerà $\mu^\prime = 0$ per indicare che è stata data una BDH-tupla valida, $\mu^\prime = 1$ se la tupla è casuale.
+\item[Guess :] \evil{A} manda un ipotesi $\nu^\prime$ di $\nu$. Se $\nu^\prime = \nu$ allora \evil{B} ritornerà $\mu^\prime = 0$ per indicare che è stata data una BDH-tupla valida, $\mu^\prime = 1$ se la tupla è casuale.
 \end{description}
 
 Come si può vedere, la costruzione del simulatore è uguale a quella dello schema originale.\\[0.5cm]
-Nel caso $\mu = 1$, l'avversario non riceve informazioni su $\nu$. Quindi abbiamo che $\mathbb{P}[\nu \neq \nu^\prime | \mu = 1] = \frac{1}{2}$. Siccome \evil{A} cerca di indovinare $\mu^\prime = 1$ quando $\nu^\prime \neq \nu$, abbiamo che $\mathbb{P}[\mu = \mu^\prime| \mu = 1] = \frac{1}{2}$\\
+
+Calcoliamo ora il vantaggio dello sfidante nel selective-set game che risulta essere
+\[\mathbb{P}[ \mu = \mu^\prime] - \frac{1}{2} \]
+Nel caso $\mu = 1$, l'avversario non riceve informazioni su $\nu$.
+Quindi abbiamo che $\mathbb{P}[\nu \neq \nu^\prime | \mu = 1] = \frac{1}{2}$.
+Siccome \evil{A} cerca di indovinare $\mu^\prime = 1$ quando $\nu^\prime \neq \nu$, abbiamo che $\mathbb{P}[\mu = \mu^\prime| \mu = 1] = \frac{1}{2}$\\
 Se $\mu = 0$, \evil{A} vede il cifrato di $m_\nu$. Il vantaggio è $\epsilon$ dà ipotesi.\\
-Quindi $\mathbb{P}[\nu \neq \nu^\prime | \mu = 0] = \frac{1}{2} + \epsilon$. Siccome viene ipotizzato $ \mu = \mu^\prime$ quando $\nu \neq \nu^\prime$, abbiamo $\mathbb{P}[\mu = \mu^\prime | \mu = 1] = \frac{1}{2} + \epsilon$.\\
-A questo punto, il vantaggio medio di un simulatore che gioca al DBDH è 
-\[ \frac{1}{2} \mathbb{P}[\nu \neq \nu^\prime | \mu = 1] + \frac{1}{2}\mathbb{P}[\nu \neq \nu^\prime | \mu = 0] - \frac{1}{2}  = \frac{1}{2}\left( \frac{1}{2} + \epsilon \right) + \frac{1}{2}\frac{1}{2} - \frac{1}{2} = \frac{1}{2} \epsilon\]
+Quindi $\mathbb{P}[\nu \neq \nu^\prime | \mu = 0] = \frac{1}{2} + \epsilon$.\\
+Siccome viene ipotizzato $ \mu = \mu^\prime$ quando $\nu \neq \nu^\prime$, abbiamo $\mathbb{P}[\mu = \mu^\prime | \mu = 1] = \frac{1}{2} + \epsilon$.\\
+A questo punto, il vantaggio complessivo di un simulatore che gioca al DBDH è 
+\[ \frac{1}{2} \mathbb{P}[\mu = \mu^\prime | \mu = 1] + \frac{1}{2}\mathbb{P}[\mu = \mu^\prime | \mu = 0] - \frac{1}{2}  = \frac{1}{2}\left( \frac{1}{2} + \epsilon \right) + \frac{1}{2}\frac{1}{2} - \frac{1}{2} = \frac{1}{2} \epsilon\]
 \end{proof}
 \end{thm}
-
-
-
-\textbf{Efficenza rispetto alla grandezza dei gruppi e metodo per rendere più \emph{leggero} il tutto (presente nel paper, è solo un raffinamento dell'insieme degli indici dell'albero che vengono presi nella decifrazione).}
 
