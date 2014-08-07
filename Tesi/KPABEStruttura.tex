@@ -1,0 +1,69 @@
+\section{Struttura generale}
+
+Consideriamo un insieme di parties $\{P_1, \cdots , P_n \}$ su cui costruiamo una gerarchia $\mathbb{A}$ che raccoglie le varie tipologie d'accesso che vogliamo garantire e verranno descritte come sottoinsiemi di parties.\\
+In questo modo, un insieme $A$ è autorizzato dal sistema unicamente se è contenuto nella gerarchia $\mathbb{A}$.
+
+Nel nostro caso, il ruolo dei parties viene preso dagli attributi.
+
+
+\begin{defi}
+Un \textbf{struttura d'accesso} è una collezione di sottoinsiemi non vuoti di parties $\mathbb{A} \subseteq 2^{\{ P_1,\cdots,P_n \}} \setminus \{ \emptyset \}$.\\
+Gli insiemi di $\mathbb{A}$ sono detti \textbf{insiemi autorizzati} e gli insiemi non in $\mathbb{A}$ sono detti \textbf{insiemi non autorizzati}.
+\end{defi}
+
+\begin{defi}
+Una collezione $\mathbb{A} \subseteq 2^{\{P_1,\cdots,P_n\}}$ è detta \textbf{monotona} se per ogni $B,C$ sottoinsiemi di $\{ P_1,\cdots,P_n \}$ con $B \subseteq C$ e $B \in \mathbb{A}$ allora $C \in \mathbb{A}$.
+\end{defi}
+
+Nella nostra trattazione useremo sempre strutture d'accesso monotone.\\[1cm]
+
+
+
+
+La struttura di uno schema KP-ABE prevede 4 algoritmi:
+\begin{description}
+\item[Impostazione :] Algoritmo con in ingresso unicamente i parametri di sicurezza impliciti del sistema. Ritorna le chiavi publiche \pk e la chiave principale \mk.
+\item[Criptare :] Algoritmo che riceve un messaggio $m$, un insieme di attributi $\gamma$ e i parametri pubblici \pk. Ritorna il messaggio criptato $E$.
+\item[Generazione chiavi :] Algoritmo che partendo da una struttura d'accesso $\mathbb{A}$, la chiave principale \mk e le chiavi pubbliche , fornisce una chiave di decifrazione $D$.
+\item[Decifrare :]L'algoritmo riceve in input il messaggio criptato $E$ che è stato criptato in un insieme d'attributi $\gamma$, la chiave di decifrazione $D$ per l'accesso alla struttura $\mathbb{A}$ e i parametri pubblici \pk.\\
+Ritornerà il messaggio $M$ se $\gamma \in \mathbb{A}$
+\end{description}
+
+
+
+Per poter valutare la sicurezza del sistema, si definisce un modello \textbf{selective-set (game)} che procede in questo modo:
+\begin{description}
+\item[Inizializzazione :] L'avversario \evil{E} dichiara l'insieme degli attributi $\gamma$ su cui vuole esser sfidato.
+\item[Impostazione :] Lo sfidato \evil{C} esegue il setup del sistema KP-ABE e fornisce ad \evil{E} i parametri pubblici all'avversario.
+\item[Fase 1 :] \evil{E} ha il permesso di interrogare \evil{C} per tutte le chiavi private delle strutture $\mathbb{A}_j$ dove $\gamma$ non è un accesso autorizzato.
+\item[Sfida :] L'avversario \evil{E} invia due messaggi di ugual lunghezza $M_0$ ed $M_1$.\\
+\evil{C} lancia una moneta binaria $b$ e cripta il messaggio $M_b$ con $\gamma$. Il cifrato è mandato a \evil{E}.
+\item[Fase 2 :] Come fase 1.
+\item[Guess :] \evil{E} ritorna una risposta $b^\prime$ rispetto a $b$
+\end{description}
+
+Mediante questo gioco, il vantaggio dell'avversario \evil{A} è definito come $\lvert \mathbb{P}(b = b^\prime) - \frac{1}{2}\rvert$.\\
+Possiamo così definire 
+
+\begin{defi}
+Uno schema KP-ABE è \textbf{sicuro} in un modello di sicurezza selective-set se ogni avversario a tempo polinomiale ha al massimo un vantaggio trascurabile nel gioco selective-set.
+\end{defi}
+
+dove definiamo
+\begin{defi}
+Tratto da \cite[Def~1.2]{crittoalice}.\\
+Un avversario \evil{A} è detto \textbf{avversario a tempo polinomiale} se usa nella sua logica un certo grado di randomicità (\evil{A} è quindi probabilistico) e se l'esecuzione di \evil{A} termina in un numero di passi $t$ polinomiale rispetto alla lunghezza dell'input. 
+\end{defi}
+
+
+Considerando la mappa bilineare $g:G_1 \times G_1 \rightarrow G_2$, il nostro obbiettivo è di dimostrare
+
+\begin{assu}[Decisionale Bilineare Diffie - Hellman]
+Siano $a,b,c,z \in \mathbb{Z}_p$ scelti casualmente e sia $g$ un generatore di $G_1$ ciclico dove $p$ è l'ordine di $G_1$\\
+Nessun algoritmo $\mathcal{B}$ a tempo polinomiale probabilistico può distinguere tra le tuple
+\[ (A = g^a , B = g^b , C = g^c , e(g,g)^{abc}) \qquad (A = g^a , B = g^b , C = g^c , e(g,g)^{z}) \]
+con al più un vantaggio trascurabile.\\
+Il vantaggio di $\mathcal{B}$ è
+\[ \left\lvert \mathbb{P}\left( \mathcal{B}(A,B,C,e(g,g)^{abc}) = 0 \right) - \mathbb{P}\left( \mathcal{B}(A,B,C,e(g,g)^{z}) = 0 \right) \right\rvert \]
+dove la probabilità è \emph{considerata} sulla scelta casuale di $a,b,c,z \in \mathbb{Z}_p$ e la scelta casuale di $\mathcal{B}$.
+\end{assu}
