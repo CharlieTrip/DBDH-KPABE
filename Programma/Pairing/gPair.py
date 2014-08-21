@@ -14,6 +14,11 @@ def inizializza():
 	return potenze
 
 def e(a,b):
-	return math.fmod(g**(potenze.index(a)*potenze.index(b)),31)
+	return math.fmod(g**(potenze.index(a)*potenze.index(b)),p)
+
+def inverse(n):
+	while n<0:
+		n = int(math.fmod(n+p , p))
+	return int(math.fmod(g**(p-1 - potenze.index(n)),p))
 
 potenze = inizializza()

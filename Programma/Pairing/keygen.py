@@ -1,8 +1,17 @@
 from math import fmod
-import gPair
 from random import randint
+from tree import tree , keyTree
+import gPair
 
-# def keygen(albero,masterKey):
-	
+class KeyGene:
+	masterKey = []
 
-# keygen(1,1)
+	def __init__(self,masterKey):
+		self.masterKey = masterKey
+
+	def keygen(self,albero):
+		alberochiavi = keyTree()
+		alberochiavi.generaFunzioni(albero, self.masterKey[len(self.masterKey)-1])
+		foglie = alberochiavi.estraiFoglie()
+		key =[(x[0] , int(fmod( gPair.g**(y * gPair.inverse( self.masterKey[x[0]-1] ) ) , gPair.p)) ) for x,y in foglie ]
+		return key

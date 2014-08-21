@@ -1,15 +1,16 @@
 class tree(object):
-	def __init__ (self,threshold,attribute,children = []):
+	def __init__ (self,threshold,attribute,children):
 		
 		if threshold <= len(children):
 			self.threshold = threshold
-		else:
+		elif len(children) > 0:
 			self.threshold = len(children)
+		else:
+			self.threshold = 1
 		self.attribute = attribute
 		self.children = children
 
 	def accettaAlbero(self,insieme):
-		print "{} in {}".format(self.attribute , insieme)
 		if self.children == [] :
 			if set(self.attribute).issubset(set(insieme)):
 				return 1
@@ -28,28 +29,28 @@ class tree(object):
 		print "th {},att {},ch {} -".format(self.threshold,self.attribute,self.children)
 
 
-# alb = tree(2,[1,2,3,4], [
-# 	tree(2,[1,2,3],[
-# 		tree(1,[1],[]),tree(1,[2,3],[])]
-# 		),
-# 	tree(1,[3,4],[]) 
-# 	])
-
-
-
-class keytree(object):
+class keyTree(object):
 	def __init__ (self):
 		self.children = []
 
 	def generaFunzioni(self,albero,valore):
 		self.grado = int(albero.threshold) - 1
-		self.attributi = alberi.attribute
+		self.attributi = albero.attribute
 
-		if self.grado != 0:
+		if self.grado > 0:
 			self.funzione = lambda x : (x**self.grado ) + valore
 		else:
 			self.funzione = lambda x : valore
 		for child in albero.children:
-			kt = keytree()
+			kt = keyTree()
 			self.children.append(kt)
 			kt.generaFunzioni(child,self.funzione(albero.children.index(child)+1))
+	
+	def estraiFoglie(self):
+		if self.children == []:
+			return [(self.attributi , self.funzione(0))]
+		else:
+			dic = []
+			for child in self.children:
+				dic.extend(child.estraiFoglie())
+			return dic
