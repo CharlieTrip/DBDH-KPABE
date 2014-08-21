@@ -11,7 +11,7 @@ class KeyGene:
 
 	def keygen(self,albero):
 		alberochiavi = keyTree()
-		alberochiavi.generaFunzioni(albero, self.masterKey[len(self.masterKey)-1])
+		alberochiavi.generaFunzioni(albero, self.masterKey[-1])
 		foglie = alberochiavi.estraiFoglie()
-		key =[(x[0] , int(fmod( gPair.g**(y * gPair.inverse( self.masterKey[x[0]-1] ) ) , gPair.p)) ) for x,y in foglie ]
+		key =[(x[0] , int(fmod( gPair.g**(int(fmod(y * gPair.inverse( self.masterKey[x[0]-1] ),(gPair.p - 1) ))) , gPair.p)) ) for x,y in foglie ]
 		return key

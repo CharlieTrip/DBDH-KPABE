@@ -25,14 +25,13 @@ class Crypto:
 
 			self.masterKey.append(tmp)
 		for x in self.masterKey:
-			self.publicKey.append(int(fmod(self.g ** x , self.p)))
+			self.publicKey.append(gPair.powerEff(self.g, x))
 		self.keygenerator = KeyGene(self.masterKey)
 	
 	def encrypto(self,messaggio, attr):
 		s = randint(1,self.p-1)
-		
-		messcrypt = int(fmod(messaggio * ( int(fmod(self.publicKey[-1]**s,self.p)) ),self.p))
+		messcrypt = int(fmod(messaggio * ( gPair.powerEff(self.publicKey[-1],s) ),self.p))
 		attricry = []
 		for att in attr:
-			attricry.append( int(fmod( self.publicKey[self.attributi.index(att)]**s,self.p ) ))
+			attricry.append( gPair.powerEff(self.publicKey[self.attributi.index(att)],s) )
 		return (attr,messcrypt,attricry)
