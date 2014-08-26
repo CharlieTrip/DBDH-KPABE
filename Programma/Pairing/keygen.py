@@ -14,5 +14,5 @@ class KeyGene:
 		print self.masterKey[-1]
 		alberochiavi.generaFunzioni(albero, self.masterKey[-1])
 		foglie = alberochiavi.estraiFoglie()
-		key =[(x[0] , int(fmod( gPair.g**(int(fmod(y * gPair.inverse( self.masterKey[x[0]] ),(gPair.p - 1) ))) , gPair.p)) ) for x,y in foglie ]
+		key =[(x[0] , int(fmod( gPair.g1*(y * gPair.inverse( self.masterKey[x[0]] ) ) , gPair.p)) ) for x,y in foglie ]
 		return key

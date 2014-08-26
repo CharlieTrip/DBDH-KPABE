@@ -28,12 +28,12 @@ class deCrypto:
 				sx = sxcompleto[:x.threshold]
 				sprimex = [xx for xx,y in sx]
 				print "{} th".format(x.threshold)
-				print "{} insieme, {} indici, {} potenze, {} lagrange".format(sx,sprimex, [gPair.powerEff(y,self.lagrangeCoeff(x,sprimex,0)) for x,y in sx], [self.lagrangeCoeff(x,sprimex,0) for x,y in sx])
+				print "{} insieme, {} indici, {} potenze, {} lagrange".format(sx,sprimex, [gPair.prodo(y,self.lagrangeCoeff(x,sprimex,0)) for x,y in sx], [self.lagrangeCoeff(x,sprimex,0) for x,y in sx])
 				print "{} prodotto".format(int(fmod(reduce((lambda x,y:x*y), [int(fmod( y**self.lagrangeCoeff(x,sprimex,0) , gPair.p)) for x,y in sx] ,1),gPair.p)))
-				return int(fmod(reduce((lambda x,y:x*y), [int(fmod( y**self.lagrangeCoeff(x,sprimex,0) , gPair.p)) for x,y in sx] ,1),gPair.p))
+				return int(fmod(reduce((lambda x,y:x*y), [int(fmod( y*self.lagrangeCoeff(x,sprimex,0) , gPair.p)) for x,y in sx] ,1),gPair.p))
 
 	def decifra(self,E,D):
 		if self.albero.accettaAlbero(E[0]):	
-			return int(fmod( E[1]  * gPair.inverse(self.decifraNodo(E,D,self.albero)),gPair.p))
+			return int(fmod( E[1]  * gPair.inverse2(self.decifraNodo(E,D,self.albero)),gPair.p))
 		else:
 			return -1

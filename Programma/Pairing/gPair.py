@@ -4,30 +4,24 @@
 
 import math
 
-# p = 31
-# g = 3
-
-p = 101
+p = 31
 g = 2
+g1 = 3
 
 potenze = []
 
-def inizializza():
-	for i in range(p-1):
-		potenze.append(math.fmod(g**i , p))
-	return potenze
-
+def potenze():
+	return [int(math.fmod(g1*n,p)) for n in range(p)]
 def e(a,b):
-	return math.fmod(g**(int(math.fmod(potenze.index(a)*potenze.index(b),(p-1) ))),p)
+	return int(math.fmod( (potenze.index(a)*potenze.index(b))*g ,p))
+
+def prodo(a,b):
+	return int(math.fmod( (a+b) ,p))
+
+def inverse2(n):
+	return p-n
 
 def inverse(n):
-	while n<0:
-		n = int(math.fmod(n+p , p))
-	return int(math.fmod(g**(p-1 - potenze.index(n)),p))
+	return p-n
 
-def powerEff(a,b):
-	return int(math.fmod(g**(int(math.fmod(potenze.index(a)*b,(p-1) ))),p))
-
-potenze = inizializza()
-
-print [n for n in range(1,p) if set(range(1,p)).issubset(set([powerEff(x,n) for x in potenze]))]
+potenze = potenze()
