@@ -15,7 +15,7 @@ Gli insiemi di $\mathbb{A}$ sono detti \textbf{insiemi autorizzati} e gli insiem
 Una collezione $\mathbb{A} \subseteq 2^{\{P_1,\cdots,P_n\}}$ è detta \textbf{monotona} se per ogni $B,C$ sottoinsiemi di $\{ P_1,\cdots,P_n \}$ con $B \subseteq C$ e $B \in \mathbb{A}$ allora $C \in \mathbb{A}$.
 \end{defi}
 
-Nella nostra trattazione useremo sempre strutture d'accesso monotone.\\[1cm]
+Nella nostra trattazione useremo sempre strutture d'accesso monotone.\\[0.8cm]
 
 
 
@@ -29,7 +29,7 @@ La struttura di uno schema KP-ABE prevede 4 algoritmi:
 Ritornerà il messaggio $M$ se $\gamma \in \mathbb{A}$
 \end{description}
 
-
+\vspace{0.8cm}
 
 Per poter valutare la sicurezza del sistema, si definisce un modello \textbf{selective-set (game)} che procede in questo modo:
 \begin{description}
@@ -42,8 +42,7 @@ Per poter valutare la sicurezza del sistema, si definisce un modello \textbf{sel
 \item[Guess :] \evil{E} ritorna una risposta $b^\prime$ rispetto a $b$
 \end{description}
 
-Mediante questo gioco, il vantaggio dell'avversario \evil{A} è definito come $\lvert \mathbb{P}(b = b^\prime) - \frac{1}{2}\rvert$.\\
-Possiamo così definire 
+Mediante questo gioco, il vantaggio dell'avversario \evil{A} è definito come \[\left\lvert \mathbb{P}(b = b^\prime) - \frac{1}{2}\right\rvert\]
 
 \begin{defi}
 Uno schema KP-ABE è \textbf{sicuro} in un modello di sicurezza selective-set se ogni avversario a tempo polinomiale ha al massimo un vantaggio trascurabile nel gioco selective-set.
@@ -55,8 +54,8 @@ Tratto da \cite[Def~1.2]{crittoalice}.\\
 Un avversario \evil{A} è detto \textbf{avversario a tempo polinomiale} se usa nella sua logica un certo grado di randomicità (\evil{A} è quindi probabilistico) e se l'esecuzione di \evil{A} termina in un numero di passi $t$ polinomiale rispetto alla lunghezza dell'input. 
 \end{defi}
 
-
-Considerando la mappa bilineare $g:G_1 \times G_1 \rightarrow G_2$, il nostro obbiettivo è di dimostrare
+\vspace{0.5cm}
+Considerando la mappa bilineare $e:G_1 \times G_1 \rightarrow G_2$, il nostro obbiettivo è di dimostrare
 
 \begin{assu}[Decisionale Bilineare Diffie - Hellman]
 Siano $a,b,c,z \in \mathbb{Z}_p$ scelti casualmente e sia $g$ un generatore di $G_1$ ciclico dove $p$ è l'ordine di $G_1$\\

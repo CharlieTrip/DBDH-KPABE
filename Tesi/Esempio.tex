@@ -1,29 +1,51 @@
 \chapter{Esempio Concreto}
 
-Vogliamo costruire uno schema KP-ABE.\\
+Vogliamo costruire uno schema KP-ABE \textbf{funzionante e utilizzando strumenti molto semplici (non saprei come spiegare questa cosa)}.\\
 Suddivideremo la costruzione nei vari passaggi più delicati per analizzarli in maniera più precisa.
 
-\section{Scelta della mappa bilineare}
+\section{Mappa bilineare e gruppi}
+
+Scegliamo il gruppo ciclico $\mathbb{Z}_{p}$ con l'operazione $+$ e definiamo la mappa bilineare come:
+\[ e(g^a,g^b) = 2^{ab} = (ab) \times 2 : = 2 + 2 + \cdots + 2 \text{ $ab$ volte}\]
+
+Dove per $g^a$ intendiamo $a$ volte $g$.\\
+In questo modo abbiamo che
+\[ D^{\frac{1}{n}} = \frac{1}{n} \times D = (p - n) \times D = p - n \times D\]
+\vspace{1cm}
+
 
 \begin{itemize}
 	\item Si può parlare del pairing di Weil e Tate anche se sforano entrambi sulle curve elittiche per costruire il pairing
-	\item Costruzione base partendo da $C_p \times C_p \rightarrow C_p$ che manda $e(g,g) = g$ dove $g$ è un generatore
-\end{itemize}
-
-\section{Costruzione dell'albero d'accesso}
-
-\begin{itemize}
-	\item Mostrare l'albero che utiliziamo per il nostro esempio e la struttura d'accesso
-	\item Valutare se è un punto così delicato
 \end{itemize}
 
 \section{Generazione e distribuzione delle chiavi}
 
-\begin{itemize}
-	\item La ``Impostazione , Criptare , Generazione Chiavi'' dello schema
-	\item Generazione polinomi dell'albero 
-\end{itemize}
+
+
+Per la generazione delle chiavi private, è stato utilizzato il seguente algoritmo:
+\vspace{0.3cm}
+\begin{algorithmic}
+\Function{generaPolinomi}{nodo dell'albero $x$, valore $v$}
+   \If{$x$ non ha figli}
+   		\State Salva il valore $v$ nel nodo.
+   \Else
+   		\State Sia $d = $ soglia di $x$ - 1
+   		\If{ $d > 0$}
+   			\State Definisco $q_x(t) = t^d + v$ \Comment{In questo modo $q_x(0) = v$}
+   		
+   		\Else
+   			\State Definisco $q_x(t) = v$
+   		
+   		\EndIf
+
+   		\ForAll{ $y$ figlio di $x$}
+   			\State {\scshape generaPolinomi}($y$, $q_x(\inde(y))$) \Comment{Così otteniamo $q_y(0) = q_x(\inde(y))$}
+   		\EndFor
+   \EndIf
+\EndFunction
+\end{algorithmic}
+\vspace{0.3cm}
+In questo modo, richiamando {\scshape generaPolinomi}($r$ radice dell'albero, $s$) otteniamo che $q_x(0) = q_{\parent(x)}(\inde(x))$.
 
 \section{Visione d'insieme}
 
-Grafo d'utilizzo e spostamento delle chiavi/messaggi (può esser interessante?)

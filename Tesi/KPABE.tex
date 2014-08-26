@@ -1,12 +1,29 @@
 \chapter{Attribute Based Encryption}
 
-ABE (Attribute Based Encryption) è una famiglia di schemi di crittografia basati tutti sull'utilizzo di una mappa bilineare $g:G_1 \times G_2 \rightarrow G_3$ con i $G_i$ gruppi ciclici di ordine un primo.
+ABE (Attribute Based Encryption) è una famiglia di schemi di crittografia basati tutti sull'utilizzo di una mappa bilineare $g:G_1 \times G_2 \rightarrow G_3$ con $G_i$ gruppi ciclici di ordine un numero primo.
 
-È possibile suddividere in due famiglie che si differenziano sul processo di autorizzazione delle chiavi di decifratura :
+Questa famiglia può esser suddivisa in due sotto-famiglie che si differenziano sul processo di autorizzazione per la decifratura :
 \begin{itemize}
-	\item \textbf{{Chipertext Policy ABE}} :  Il messaggio cifrato contiene le regole d'autorizzazione. Questa viene concessa se la chiave private dell'utente soddisfa la policy d'autorizzazione del messaggio.
+	\item \textbf{{Chipertext Policy ABE}} :  Il messaggio cifrato contiene le regole d'autorizzazione. L'autorizzazione viene concessa se la chiave private dell'utente soddisfa la policy del messaggio.
 	\item \textbf{Key Policy ABE} : La chiave dell'utente contiene le informazioni sulla policy d'autorizzazione. Il messaggio cifrato conterrà gli attributi necessari per permettere la decodifica.
 \end{itemize}
+
+\begin{minipage}[c]{0.9\textwidth}
+\vspace{0,3cm}
+\centering
+	\begin{minipage}[c]{0.45\textwidth}
+		\centering
+		\includegraphics[keepaspectratio,width=\textwidth]{CT.jpg}\\
+		{\small\scshape Chipertext Policy}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[c]{0.45\textwidth}
+		\centering
+		\includegraphics[keepaspectratio,width=\textwidth]{KP.jpg}\\
+		{\small\scshape Key Policy}
+	\end{minipage}
+\vspace{0,8cm}
+\end{minipage}
 
 In entrambi i casi, possiamo caratterizzare\cite{maya3} queste famiglia in base ai gruppi su cui agisce la mappa bilineare :
 \begin{itemize}
@@ -17,10 +34,10 @@ In entrambi i casi, possiamo caratterizzare\cite{maya3} queste famiglia in base 
 
 Utilizzeremo il primo tipo dove $G_1 = G_2$ ed entrambi di ordine $q$ primo in uno schema \textbf{Key Policy ABE}
 
-
+\newpage
 \input{KPABEStruttura.tex}
-
+\newpage
 \input{KPABECostruzione.tex}
-
+\newpage
 \input{KPABEDH.tex}
 

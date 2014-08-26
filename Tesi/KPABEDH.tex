@@ -30,7 +30,7 @@ Definiamo quindi due casistiche :
 Per prima cosa fissiamo un polinomio $q_x$ di grado $d_x$ per il nodo radice $x$ tale che $q_x(0) = \lambda_x$ e setta in maniera casuale gli altri valori per completare $q_x$.\\
 Successivamente, per ogni figlio $x^\prime$ di $x$, viene richiamata la procedura $\polysat(\mathcal{T}_{x^\prime}, \gamma, q_x(\inde(x^\prime))$ così da ottenere $q_{x^\prime} (0) = q_x (\inde(x^\prime))$.
 \item $\polyunsat(\mathcal{T}_x, \gamma , g^{\lambda_x})$ : questa procedura viene eseguita se $\mathcal{T}_x (\gamma) = 0$ cioé quando non viene soddisfatto l'albero. $g^{\lambda_x} \in \mathbb{G}_1$.\\
-Viene fissato un polinomio $q_x$ di grado $d_x$ per il nodo $x$ tale che $q_x(0) = \lambda_x$. Siccome $\mathcal{T}_x(\gamma) = 0$, non più di $d_x$ figli soddisfa l'albero.\\
+Viene fissato un polinomio $q_x$ di grado $d_x$ per il nodo $x$ tale che $q_x(0) = \lambda_x$. Siccome $\mathcal{T}_x(\gamma) = 0$, non più di $d_x$ figli soddisfano l'albero.\\
 Sia quindi $h_x \leq d_x$ il numero di figli che soddisfano l'albero in $x$ e per questi viene scelto a caso un $\lambda_{x^\prime} \in \mathbb{Z}_p$ e fissiamo $q_{x^\prime}(0) = \lambda_{x^\prime}$. Successivamente vengono fissati casualmente i restanti $d_x - h_x$ punti di $q_x$ per completare il polinomio.\\
 L'algoritmo procede nella definizione dei polinomi per ogni nodo figlio $x^\prime$ di $x$ come
 \begin{itemize}
@@ -67,10 +67,10 @@ Calcoliamo ora il vantaggio dello sfidante nel selective-set game che risulta es
 \[\mathbb{P}[ \mu = \mu^\prime] - \frac{1}{2} \]
 Nel caso $\mu = 1$, l'avversario non riceve informazioni su $\nu$.
 Quindi abbiamo che $\mathbb{P}[\nu \neq \nu^\prime | \mu = 1] = \frac{1}{2}$.
-Siccome \evil{A} cerca di indovinare $\mu^\prime = 1$ quando $\nu^\prime \neq \nu$, abbiamo che $\mathbb{P}[\mu = \mu^\prime| \mu = 1] = \frac{1}{2}$\\
+Siccome \evil{A} cerca di indovinare $\mu^\prime = 1$ quando $\nu^\prime \neq \nu$, abbiamo che $\mathbb{P}[\mu = \mu^\prime| \mu = 1] = \frac{1}{2}$\\[0.2cm]
 Se $\mu = 0$, \evil{A} vede il cifrato di $m_\nu$. Il vantaggio è $\epsilon$ dà ipotesi.\\
 Quindi $\mathbb{P}[\nu \neq \nu^\prime | \mu = 0] = \frac{1}{2} + \epsilon$.\\
-Siccome viene ipotizzato $ \mu = \mu^\prime$ quando $\nu \neq \nu^\prime$, abbiamo $\mathbb{P}[\mu = \mu^\prime | \mu = 1] = \frac{1}{2} + \epsilon$.\\
+Siccome viene ipotizzato $ \mu = \mu^\prime$ quando $\nu \neq \nu^\prime$, abbiamo $\mathbb{P}[\mu = \mu^\prime | \mu = 0] = \frac{1}{2} + \epsilon$.\\[0.2cm]
 A questo punto, il vantaggio complessivo di un simulatore che gioca al DBDH è 
 \[ \frac{1}{2} \mathbb{P}[\mu = \mu^\prime | \mu = 1] + \frac{1}{2}\mathbb{P}[\mu = \mu^\prime | \mu = 0] - \frac{1}{2}  = \frac{1}{2}\left( \frac{1}{2} + \epsilon \right) + \frac{1}{2}\frac{1}{2} - \frac{1}{2} = \frac{1}{2} \epsilon\]
 \end{proof}

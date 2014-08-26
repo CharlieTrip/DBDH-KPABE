@@ -1,13 +1,26 @@
 \chapter{Conclusioni}
 
-\section{Sicurezza ed efficenza}
 
-L'enorme quantità di conti necessari per creare tutte le chiavi private, la necessita di utilizzare $S_x$ (\ref{insiemedecript}) che è arbitrario per definizione, comporta una complessità non indifferente, tutta lineare rispetto ai parametri $\gamma$ su cui costruiamo chiavi.\\
+
+\section{Efficenza}
+
+\textbf{L'unica cosa che si può dire è il fatto che bisogna fare molti conti (o polinomi) che crescono man mano che l'universo si allarga.}
+
+Quando dobbiamo generare le chiavi private per ogni albero d'accesso, siamo obbligati a costruire polinomi con particolari regole.\\
+
 
 \section{Breaking the code}
 
-Da definizione delle chiavi publiche (\ref{pubchiavi}) si potrebbe risalire al gruppo $G_1$ con un metodo dei logaritmi discreti.\\
-Per la costruzione della mappa bilineare, si può effettuare un analisi con il metodo dei logaritmi discreti anche su $G_2$ (usando i $e(g,g)$ e quel che si ottiene dalla mappa).\\
-La ``sicurezza'' nasce dal fatto che i pairing non banali utilizzati sono su curve elittiche il che rende il processo di logaritmo piuttosto più complesso rispetto all'usare $\mathbb{C}_p$ e un generatore.
+Per poter effettuare un attacco allo schema ABE, è necessario:
 
-\textbf{Non saprei quanto si riesce a dire in più su questa parte.}
+\begin{itemize}
+	\item La mappa bilineare $e$. Può risultare molto complesso ricavare una formula analitica.\\ 
+	È fondamentale per rompere lo schema poiché abbiamo $e(g,g) = g^\prime$ dove $g$ è un generatore del gruppo su cui si basano le chiavi mentre $g^\prime$ genera il gruppo su cui vengono criptati i messaggi.\\
+	Conoscendo $g^\prime$ ci è possibile ricavare $g$ ad esempio risolvendo $e(x,x) = g^\prime$.
+	\item Dalla chiave pubblica \pk, ci viene fornito $T_i = g^{t_i}$.\\
+	Una volta trovato $g$ dalla mappa $e$, è possibile effettuare il logaritmo discreto per ottenere i valori $t_i$.
+\end{itemize}
+
+Una volta ottenuta la chiave principale \mk, si è in grado di decifrare qualsiasi messaggio.\\
+La complessità della mappa bilineare gioca un fondamentale ruolo nella sicurezza dello schema ABE poiché maschera nella proprietà $e(g,g) = g^\prime$ entrambi i generatori utilizzati.
+
