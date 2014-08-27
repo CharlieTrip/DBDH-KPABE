@@ -9,7 +9,7 @@ class deCrypto:
 
 	def lagrangeCoeff(self,i,S,val):
 		# return (coef sopra) , (coef sotto) <- sotto comporta una radice nel conto
-		return int(fmod(reduce((lambda x,y:x*y),[ int(fmod( (j - val) * gPair.inverse(j - i) ,gPair.p) ) for j in S if j!= i],1),gPair.p))
+		return int(fmod(reduce((lambda x,y:x*y),[ int(fmod( (j - val), gPair.p)) for j in S if j!= i],1),gPair.p)) , int(reduce((lambda x,y:x*y),[ j-i  for j in S if j!= i],1))
 
 	def decifraFoglia(self,E,D,x):
 		if x.attribute[0] in E[0]:
@@ -27,8 +27,7 @@ class deCrypto:
 			else:
 				sx = sxcompleto[:x.threshold]
 				sprimex = [xx for xx,y in sx]
-				# pot(radice(y,lagrange sotto), lagrange sopra) <-- (Fx^{1/b})^a
-				return int(fmod(reduce((lambda x,y:x*y),[ gPair.pot(y , self.lagrangeCoeff(x,sprimex,0)) for x,y in sx] ,1) , gPair.p))
+				return int(fmod(reduce((lambda x,y: x + y),[ gPair.pot(gPair.radice(y,self.lagrangeCoeff(x,sprimex,0)[1]),self.lagrangeCoeff(x,sprimex,0)[0])  for x,y in sx],0) + gPair.p  , gPair.p))
 
 
 	def decifra(self,E,D):

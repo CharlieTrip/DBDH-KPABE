@@ -4,7 +4,7 @@
 
 import math
 
-p = 7
+p = 101
 g = 2
 g1 = 3
 
@@ -26,7 +26,7 @@ def inverse(n):
 	return p-n
 
 def radice(a,n):
-	return pot(a, int(math.fmod(( int(math.fmod(extendedEuclideanAlgorithm(n,p)[0] , p)) + p),p)))
+	return pot(a, int(math.fmod(( int(math.fmod(extendedEuclideanAlgorithm(n,p)[0] , p))*extendedEuclideanAlgorithm(n,p)[2] + p),p)))
 
 
 def extendedEuclideanAlgorithm(a, b):

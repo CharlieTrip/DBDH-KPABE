@@ -1,7 +1,7 @@
 from cripto import Crypto
 from decrypto import deCrypto
 from tree import tree
-
+from gPair import radice,pot,e,extendedEuclideanAlgorithm
 cry = Crypto(3)
 
 # alb1 = tree(2,[0,1,2,3], [
