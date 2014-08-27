@@ -25,9 +25,6 @@ class tree(object):
 			else:
 				return 0
 
-	def stringato(self):
-		print "th {},att {},ch {} -".format(self.threshold,self.attribute,self.children)
-
 
 class keyTree(object):
 	def __init__ (self):

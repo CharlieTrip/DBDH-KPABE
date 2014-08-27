@@ -10,7 +10,6 @@ class Crypto:
 
 	p = gPair.p
 	g = gPair.g
-	g1 = gPair.g1
 	publicKey = []
 	masterKey = []
 
@@ -26,13 +25,15 @@ class Crypto:
 
 			self.masterKey.append(tmp)
 		for x in self.masterKey:
-			self.publicKey.append(gPair.prodo(self.g1, x))
+			self.publicKey.append(gPair.pot(self.g, x))
+
+		self.publicKey[-1] = gPair.pot(gPair.e(self.g,self.g),self.masterKey[-1])
 		self.keygenerator = KeyGene(self.masterKey)
 	
 	def encrypto(self,messaggio, attr):
 		s = randint(1,self.p-1)
-		messcrypt = int(fmod(messaggio * ( gPair.prodo(self.publicKey[-1],s) ),self.p))
+		messcrypt = gPair.pro(messaggio, gPair.pot(self.publicKey[-1],s) )
 		attricry = []
 		for att in attr:
-			attricry.append( gPair.prodo(self.publicKey[self.attributi.index(att)],s) )
+			attricry.append( gPair.pot(self.publicKey[self.attributi.index(att)],s) )
 		return (attr,messcrypt,attricry)
