@@ -1,26 +1,30 @@
-\chapter{Conclusioni}
+\chapter{Considerazioni conclusive}
 
 
 
-\section{Efficenza}
+\section{Efficienza}
+Come definito in \cite[4.3]{kpabe}, lo schema risulta complesso in maniera lineare rispetto alla grandezza del gruppo $G_1$ con una nota particolare sulla funzione di decrittazione.\\
+Come descritto in \ref{insiemedecript}, dobbiamo scegliere un insieme $S_x$ di nodi su cui effettueremo la decifrazione.\\
+La possibilità di scegliere questo insieme ci permettere di diminuire il numero di conti effettuati: vengono scelti i nodi con indice minore così da facilitare il calcolo dei coefficenti di Lagrange.\\
+In ugual modo, conviene raccogliere i coefficenti di Lagrange per eseguire il minor numero di esponenziali possibili.
 
-\textbf{L'unica cosa che si può dire è il fatto che bisogna fare molti conti (o polinomi) che crescono man mano che l'universo si allarga.}
 
-Quando dobbiamo generare le chiavi private per ogni albero d'accesso, siamo obbligati a costruire polinomi con particolari regole.\\
+\section{Sicurezza}
 
+Le applicazioni sono poche è principalmente orientate all'analisi della sicurezza che uno schema di questo tipo fornisce.\\
+Nonostante sia piuttosto articolato violare il sistema, alcuni anni fa \cite{nict} è stato \emph{bucato} un sistema molto simile a quello presentato in questa tesi. Il motivo principale è che è ancora prematuro valutare il livello di sicurezza di un metodo crittografico basato sul pairing tra cui è presente la famiglia ABE.
 
-\section{Breaking the code}
+\section{Analogie nella famiglia}
 
-Per poter effettuare un attacco allo schema ABE, è necessario:
-
+Durante lo studio del paper \cite{kpabe}, sono stati trovati altri paper, come \cite{sssth} o \cite{benoit}, che trattavano lo stesso problema con delle piccole variazioni:
 \begin{itemize}
-	\item La mappa bilineare $e$. Può risultare molto complesso ricavare una formula analitica.\\ 
-	È fondamentale per rompere lo schema poiché abbiamo $e(g,g) = g^\prime$ dove $g$ è un generatore del gruppo su cui si basano le chiavi mentre $g^\prime$ genera il gruppo su cui vengono criptati i messaggi.\\
-	Conoscendo $g^\prime$ ci è possibile ricavare $g$ ad esempio risolvendo $e(x,x) = g^\prime$.
-	\item Dalla chiave pubblica \pk, ci viene fornito $T_i = g^{t_i}$.\\
-	Una volta trovato $g$ dalla mappa $e$, è possibile effettuare il logaritmo discreto per ottenere i valori $t_i$.
+	\item \textbf{Identity Based Encryption} : Hanno una struttura molto simile a quella ABE con la differenza che l'attributo viene sostituito dall'identità dell'utente. Questo comporta che la propria identità, figurata come un indirizzo IP, una mail o qualcosa di simile, diventa la policy di decodifica.\\
+	Questo comporta la necessità di avere un ente che garantisce e certifica l'identità della persone che utilizzano il sistema.
+	\item \textbf{Hash degli attributi} : alcune applicazioni \cite{kpabe2} sulla famiglia dei Ciphertext-Policy ABE, presentano una funzione di hash degli attributi che vengono resi pubblici.\\  In questo modo è impossibile per l'utente apprendere quali sono gli attributi del sistema perché :
+	\begin{itemize}
+		\item Gli attributi che l'utente ha sono conosciuti sia in chiaro che hashati
+		\item Gli attributi che l'utente non ha sono conosciuti solo nella forma hashata
+	\end{itemize}
+	Nei Key-Policy ABE, è necessario conoscere l'attributo in chiaro del messaggio cifrato per poter eseguire la verifica rispetto alle policy.
+	\item \textbf{Spostare il calcolo} : alcuni paper spostano il calcolo tra i vari algoritmi. Nonostante la differenza di forma, la struttura rimane invariata.
 \end{itemize}
-
-Una volta ottenuta la chiave principale \mk, si è in grado di decifrare qualsiasi messaggio.\\
-La complessità della mappa bilineare gioca un fondamentale ruolo nella sicurezza dello schema ABE poiché maschera nella proprietà $e(g,g) = g^\prime$ entrambi i generatori utilizzati.
-

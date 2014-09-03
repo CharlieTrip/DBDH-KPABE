@@ -1,26 +1,22 @@
-\chapter{Esempio Concreto}
-
-Vogliamo costruire uno schema KP-ABE \textbf{funzionante e utilizzando strumenti molto semplici (non saprei come spiegare questa cosa)}.\\
-Suddivideremo la costruzione nei vari passaggi più delicati per analizzarli in maniera più precisa.
+\chapter{Un esempio concreto}
 
 \section{Mappa bilineare e gruppi}
 
 Scegliamo il gruppo ciclico $\mathbb{Z}_{p}$ con l'operazione $+$ e definiamo la mappa bilineare come:
-\[ e(g^a,g^b) = 2^{ab} = (ab) \times 2 : = 2 + 2 + \cdots + 2 \text{ $ab$ volte}\]
+\[ e(g^a,g^b) = h^{ab} = (ab) \times h : = h + h + \cdots + h \text{ $ab$ volte}\]
 
 Dove per $g^a$ intendiamo $a$ volte $g$.\\
-In questo modo abbiamo che
-\[ D^{\frac{1}{n}} = \frac{1}{n} \times D = (p - n) \times D = p - n \times D\]
-\vspace{1cm}
 
 
-\begin{itemize}
-	\item Si può parlare del pairing di Weil e Tate anche se sforano entrambi sulle curve elittiche per costruire il pairing
-\end{itemize}
+Un problema è la necessità di conoscere il valore $a$ tale che $g^a$ è il nostro valore scelto che risulta il logaritmo discreto che deve risultare difficile da calcolare per esser sicuro.\\
+Questo pairing è banale poiché la complessità del logaritmo discreto $h^a$ è equivalente ad eseguire l'algoritmo di euclide esteso per risolvere $a \times h + j \times p = k \times h^a$ trovando $j,k$.\\
+
+
+Per utilizzi più sicuri e concreti vengono utilizzate curve ellittiche su campi finiti. Su queste viene creato un pairing sfruttando caratteristiche proprie delle curve ellittiche.\\
+È possibile trovare informazioni a riguardo sul pairing di Weil e Tate con algoritmi per rendere il calcolo del pairing efficente in \cite{benoit} e \cite{maas}.
+
 
 \section{Generazione e distribuzione delle chiavi}
-
-
 
 Per la generazione delle chiavi private, è stato utilizzato il seguente algoritmo:
 \vspace{0.3cm}
@@ -45,7 +41,40 @@ Per la generazione delle chiavi private, è stato utilizzato il seguente algorit
 \EndFunction
 \end{algorithmic}
 \vspace{0.3cm}
-In questo modo, richiamando {\scshape generaPolinomi}($r$ radice dell'albero, $s$) otteniamo che $q_x(0) = q_{\parent(x)}(\inde(x))$.
+In questo modo, richiamando {\scshape generaPolinomi}($r$ radice dell'albero, $s$) otteniamo che $q_x(0) = q_{\parent(x)}(\inde(x))$.\\[0.1cm]
+L'algoritmo genera polinomi molto velocemente nonostante la loro semplicità.\label{polinomi}\\[1cm]
+
+Osserviamo che l'effettiva chiave privata che viene data all'utente è della forma $D = g^{\dfrac{q_x(0)}{t_i}}$.\\
+In questa situazione, dobbiamo trovare la radice $t_i$-esima di $g$. Per rendere efficente l'utilizzo del sistema, è necessario tener conto di questo \emph{``problema''}.\\
+Nell'esempio semplificato, il calcolo della radice viene eseguito mediante l'algoritmo esteso di Euclide:
+
+\begin{center}
+\begin{tikzcd}
+\text{Trovare } x = g^{\frac{1}{b}} \arrow{r} & \begin{tabular}{@{}c@{}} Risolvere \\$x^b = g $ \\  cioè  \end{tabular} \quad bx = g 
+\arrow{l} \arrow{dr}& \- \\
+\left. \begin{tabular}{@{}c@{}}Euclide \\ $u_1,u_2 : u_1 b + u_2 p = 1$  \\ modulo $p$ \end{tabular}\right\rvert \quad u_1 b = 1\arrow{r} & u_1 b x = u_1 g  \arrow{r} & x = u_1 g
+\end{tikzcd}
+\end{center}
+
+In questo modo troviamo la radice in una maniera efficiente.
+
+
 
 \section{Visione d'insieme}
 
+
+Per come è descritto il sistema, l'utente \textbf{non} è a conoscenza del gruppo $G_1$ su cui è definita la mappa bilineare ma conosce unicamente $G_2$ su cui esegue le operazioni per decrittare i messaggi.\\
+Per questo motivo un possibile attacco risulta molto articolato:
+\begin{enumerate}
+   \item\textbf{ Logaritmo discreto su $G_2$}\\
+   Si ricava il generatore $h$.
+   \item \textbf{Mappa bilineare $e$}\\
+   Conoscendo $h$, è sufficente trovare nell'insieme degli $e(a,a)$ quello che risulta uguale ad $h$. Questo è dovuto alle proprietà della mappa bilineare.\\
+   In questo modo riusciamo ad ottenere $g$ generatore di $G_1$ e tale per cui $e(g,g) = h$.
+   \item\textbf{ Logaritmo discreto su $G_1$}\\
+   Ottenuto il generatore $g$, si può risolvere il logaritmo $g^x = T_i$ dove le $T_i$ sono le chiavi pubbliche dei vari attributi.\\
+   A questo punto è possibile ricavare il valore $s$ (scelto casualmente nell'algoritmo di codifica) per poter decifrare il messaggio.
+\end{enumerate}
+
+È da notare come l'ultimo punto può risultare molto complesso se non si conosce l'operazione di $G_1$.\\
+Nel nostro caso, un possibile attaccante può facilmente calcolare il logaritmo di $g^a$ poiché è unicamente necessario l'algoritmo di Euclide.\\[0.5cm]
