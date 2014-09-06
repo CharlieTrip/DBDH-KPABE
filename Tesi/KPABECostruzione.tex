@@ -42,7 +42,7 @@ cioè viene garantito l'accesso unicamente se il numero di figli che autorizzano
 
 Ora prendiamo un $G_1$ gruppo bilineare di ordine $p$ e sia $g$ un generatore di $G_1$.\\
 %Un parametro di sicurezza $k$ determinerà la grandezza dei gruppi.\\ % Non è utile nella tesi e può esser richiamato
-In aggiunta consideriamo $e : G_1 \times G_1 \rightarrow G_2$ mappa bilineare che soddisfa :
+In aggiunta consideriamo $e : G_1 \times G_1 \rightarrow G_2$ mappa bilineare che soddisfa :\label{pairinge}
 \begin{enumerate}
 \item $e$ è bilineare rispetto al prodotto
 \[ \forall_{u,v \in G_1}, a,b \in \mathbb{Z}_p : e(u^a,v^b) = e(u,v)^{ab} \]
@@ -105,7 +105,8 @@ Notiamo che la cardinalità dell'insieme $ S^\prime_x$ è maggiore rispetto al g
 La valutazione di $P(t)$ nei punti di $S^\prime_x$ ci fornisce 
 \[P(j) = \sum_{i \in S^\prime_x} q_x(i) \Delta_{i,S^\prime_x}(j) = \sum_{i \in S^\prime_x} q_x(i) \delta_{i,j} = q_x(j)\]
 cioé la valutazione di $P$ corrisponde con quella di $q_x$ in esattamente $\# S^\prime_x = \deg q_x + 1$ punti.\\
-Per questo, i due polinomi coincidono ed abbiamo $P(0) = q_x(0)$.	\href{http://math.stackexchange.com/questions/685472/find-n-degree-polynomial-from-n1-points}{(Spiegazione formale)}
+Per questo, i due polinomi coincidono ed abbiamo $P(0) = q_x(0)$.
+% \href{http://math.stackexchange.com/questions/685472/find-n-degree-polynomial-from-n1-points}{(Spiegazione formale)}
 
 \item Per decifrare usiamo $\decrypt (E,D,r)$ dove $r$ è la radice dell'albero
 \end{itemize}

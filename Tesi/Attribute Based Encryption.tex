@@ -16,6 +16,7 @@
 \usepackage[numbers]{natbib}
 
 \usepackage{algpseudocode}
+\usepackage{float}
 
 \usepackage{hyperref}
 \hypersetup{colorlinks, linkcolor=blue}
@@ -57,9 +58,14 @@
 \frontmatter
 \begin{titlepage}
 \begin{center}
-{{\Large{\textsc{Università degli Studi di Trento}}}}
-\rule[0.1cm]{15.8cm}{0.1mm}
-\rule[0.5cm]{15.8cm}{0.6mm}
+{{\Large{\textsc{Università degli Studi di Trento}}}}\\[0.2cm]
+
+	\begin{figure}[h!]
+		\centerline{\rule[0.1cm]{15.7cm}{0.1mm}}
+		\centerline{\rule[0.5cm]{15.7cm}{0.6mm}}
+	\end{figure}
+
+
 {\small{\textsc { Dipartimento di Matematica \\
 Corso di Laurea in Matematica}}}
 \end{center}
@@ -101,22 +107,22 @@ Corso di Laurea in Matematica}}}
 
 \thispagestyle{empty}
 
-\newpage
-\thispagestyle{empty}
-\begin{flushleft}
-\textit{Eventuale proposizione}\\
-\end{flushleft}
-\vspace*{3cm}
-\begin{flushright}
-Eventuale dedica
-\end{flushright}
+% \newpage
+% \thispagestyle{empty}
+% \begin{flushleft}
+% \textit{Eventuale proposizione}\\
+% \end{flushleft}
+% \vspace*{3cm}
+% \begin{flushright}
+% Eventuale dedica
+% \end{flushright}
 
 \newpage
 \tableofcontents
 \newpage
 
-
 \mainmatter
+\input{abstract.tex}
 
 \input{Introduzione.tex}
 

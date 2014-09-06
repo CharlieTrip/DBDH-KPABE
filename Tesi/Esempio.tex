@@ -27,24 +27,24 @@ Per la generazione delle chiavi private, è stato utilizzato il seguente algorit
    \Else
    		\State Sia $d = $ soglia di $x$ - 1
    		\If{ $d > 0$}
-   			\State Definisco $q_x(t) = t^d + v$ \Comment{In questo modo $q_x(0) = v$}
-   		
+   			\State Definisco $q_x(t) = t^d + v$ \Comment{{\small In questo modo $q_x(0) = v$}}
+
    		\Else
    			\State Definisco $q_x(t) = v$
    		
    		\EndIf
 
    		\ForAll{ $y$ figlio di $x$}
-   			\State {\scshape generaPolinomi}($y$, $q_x(\inde(y))$) \Comment{Così otteniamo $q_y(0) = q_x(\inde(y))$}
+   			\State {\scshape generaPolinomi}($y$, $q_x(\inde(y))$) 
+            \State {\itshape\small Così otteniamo $q_y(0) = q_x(\inde(y))$}
    		\EndFor
    \EndIf
 \EndFunction
 \end{algorithmic}
 \vspace{0.3cm}
-In questo modo, richiamando {\scshape generaPolinomi}($r$ radice dell'albero, $s$) otteniamo che $q_x(0) = q_{\parent(x)}(\inde(x))$.\\[0.1cm]
-L'algoritmo genera polinomi molto velocemente nonostante la loro semplicità.\label{polinomi}\\[1cm]
+In questo modo, richiamando {\scshape generaPolinomi}($r$ radice dell'albero, $s$) otteniamo che $q_x(0) = q_{\parent(x)}(\inde(x))$.\label{polinomi}\\[1cm]
 
-Osserviamo che l'effettiva chiave privata che viene data all'utente è della forma $D = g^{\dfrac{q_x(0)}{t_i}}$.\\
+Osserviamo che l'effettiva chiave privata che viene data all'utente è della forma $D = g^{\frac{q_x(0)}{t_i}}$ dove ci focaliziamo su $t_i$.\\
 In questa situazione, dobbiamo trovare la radice $t_i$-esima di $g$. Per rendere efficente l'utilizzo del sistema, è necessario tener conto di questo \emph{``problema''}.\\
 Nell'esempio semplificato, il calcolo della radice viene eseguito mediante l'algoritmo esteso di Euclide:
 
