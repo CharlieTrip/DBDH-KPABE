@@ -1,17 +1,17 @@
 \subsection{Costruzione del sistema} 
 
 % Le chiavi private sono identificate da una struttura d'accesso ad albero dove ogni nodo interno è una funzione di soglia e le foglie sono gli attributi. \\
-Un utente potrà decifrare un messaggio cifrato con una data chiave privata unicamente se il messaggio soddisfa la policy d'accesso della chiave.\\[0,5cm]
+Un utente potrà decifrare un messaggio cifrato con una data chiave privata unicamente se il messaggio soddisfa la policy d'accesso della chiave.\\[0.3cm]
 
-\begin{defi}
-Sia \evil{T} un \textbf{albero} rappresentante la nostra struttura d'accesso $\mathbb{A}$.\\
+\begin{defi}\-\\
+Sia \evil{T} un \textbf{albero} rappresentante la nostra struttura d'accesso $\mathbb{A}$.\\[0.1cm]
 Ogni non-foglia dell'albero rappresenta una funzione di soglia, descritta dai suoi figli e da un valore di soglia.\\
 Se $\num_x$ è il numero di figli di un dato nodo $x$ e $k_x$ e il suo valore di soglia, allora $0 < k_x \leq \num_x$.\\
 Quando $k_x = 1$, la funzione agisce come un OR mentre per $k_x = \num_x$ essa diventa una AND.\\
-Ogni foglia è descritta dal suo attributo e una soglia di $k_x = 1$.\\
+Ogni foglia è descritta dal suo attributo e una soglia di $k_x = 1$.\\[0.2cm]
 Nel nostro albero ci è possibile definire un ordine rispetto ai figli di un nodo $x$ che li ordina da $1$ a $\num_x$. Questi indici sono univocamente assegnati ai nodi per ogni chiave d'accesso arbitraria.
 \end{defi}
-
+\vspace{0.3cm}
 
 Per semplificare il lavoro con gli alberi, definiamo delle funzioni:
 \begin{itemize}
@@ -21,11 +21,11 @@ Per semplificare il lavoro con gli alberi, definiamo delle funzioni:
 \item $\mathcal{T}_x$ : è il sottoalbero di \evil{T} con radice $x$ 
 \end{itemize}
 
-\vspace{0.8cm}
+\vspace{0.3cm}
 A questo punto, creiamo un algoritmo che ci permetta di verificare se un dato insieme di attributi può accedere o meno nell'albero.
+\vspace{0.5cm}
 
-\vspace{0.2cm}
-\textbf{Soddisfare un albero d'accesso}\\
+\textbf{ \large Soddisfare un albero d'accesso}\\[0.1cm]
 Denotiamo con 
 \begin{center}
 $\mathcal{T}_x(\gamma) = 1$ se e solo se l'insieme d'attributi $\gamma$ soddisfa l'albero d'accesso $\mathcal{T}_x$
@@ -42,18 +42,19 @@ cioè viene garantito l'accesso unicamente se il numero di figli che autorizzano
 
 Ora prendiamo un $G_1$ gruppo bilineare di ordine $p$ e sia $g$ un generatore di $G_1$.\\
 %Un parametro di sicurezza $k$ determinerà la grandezza dei gruppi.\\ % Non è utile nella tesi e può esser richiamato
-In aggiunta consideriamo $e : G_1 \times G_1 \rightarrow G_2$ mappa bilineare che soddisfa :\label{pairinge}
+\begin{defi}\label{pairinge}
+$e : G_1 \times G_1 \rightarrow G_2$ mappa bilineare che soddisfa :
 \begin{enumerate}
 \item $e$ è bilineare rispetto al prodotto
 \[ \forall_{u,v \in G_1}, a,b \in \mathbb{Z}_p : e(u^a,v^b) = e(u,v)^{ab} \]
 \item $e$ è non degenere \[e(g,g) \neq 1\]
 \item $e$ è velocemente computabile
 \end{enumerate}
-
+\end{defi}
 
 \vspace{0.8cm}
 
-\textbf{Creazione sistema}
+\textbf{\Large Creazione sistema}
 
 \begin{description}
 \item[Impostazione :]Definiamo l'universo di attributi $\mathcal{U} = \{1,\cdots,n\}$. Ora, per ogni attributo $i \in \mathcal{U}$, scegliamo uniformemente a caso un elemento $t_i$ di $\mathbb{Z}_p$. Allo stesso modo prendiamo un $y$.\\
@@ -61,8 +62,10 @@ I parametri pubblici \pk pubblicabili sono
 \[ T_1 = g^{t_1} , T_2 = g^{t_2} , \cdots , T_n = g^{t_n} , Y = e(g,g)^y \]\label{pubchiavi}
 mentre la chiave principale \mk è
 \[ t_1 , t_2 , \cdots , t_n , y \]
+\vspace{0.1cm}
 \item[Criptare :] Partendo da $(M , \gamma, \text{ \pk })$, cripto $M \in G_2$ sotto un insieme di attributi $\gamma$ scegliendo un $s$ casualmente in $\mathbb{Z}_p$ e pubblico il testo cifrato come
 \[ E = (\gamma , E^\prime = MY^s , \{E_i = T_i^s \}_{i\in\gamma}) \]
+\vspace{0.1cm}
 \item[Generazione chiavi :] Partendo da $( \mathcal{T} , MK )$, l'algoritmo ci fornisce una chiave capace di decifrare il messaggio rispetto a $\gamma$ se e solo se $\mathcal{T}(\gamma) = 1$ cioè $\gamma$ è un insieme di attributi autorizzato.
 \begin{enumerate}
 \item Scelgo un polinomio $q_x$ per ogni nodo $x$, incluse le foglie, dell'albero \evil{T}.\\
@@ -74,9 +77,10 @@ I polinomi sono scelti dall'alto al basso, partendo quindi dalla radice.
 \[ D_x = g^{\frac{q_x(0)}{t_i}} \qquad \text{ dove } i \in \att(x) \]
 \end{enumerate}
 L'insieme di tutte le chiavi di sopra forma la chiave di decriptazione $D$
-\item[Decifrare :] Partendo da $(E,D)$.\\
-Definiamo il nostro metodo di decifrazione mediante un algoritmo ricorsivo:\\
-Sia $\decrypt( E , D , x )$ in un elemento di $G_2$ oppure non è permesso calcolarlo e lo indicheremo con $\perp$. Sia $i = \att(x)$.
+\vspace{0.1cm}
+\item[Decifrare :] Partendo da $(E,D)$. Definiamo il nostro metodo di decifrazione mediante un algoritmo ricorsivo:\\
+Sia $\decrypt( E , D , x )$ in un elemento di $G_2$ oppure non è permesso calcolarlo e lo indicheremo con $\perp$.\\
+Sia $i = \att(x)$.
 \begin{itemize}
 \item Se $x$ è una foglia
 \[ \decrypt(E,D,x) = \begin{cases}
@@ -84,9 +88,12 @@ Sia $\decrypt( E , D , x )$ in un elemento di $G_2$ oppure non è permesso calco
 e(D_x,E_i) = e(g^{\frac{q_x(0)}{t_i}},g^{s\cdot t_i}) = e(g,g)^{q_x(0) \cdot s}
 \end{cases} \]
 \item Se $x$ non è una foglia :\\
-Per ogni nodo figlio $z$ di $x$, $F_z = \decrypt(E,D,z)$. Sia $S_x$\label{insiemedecript} un insieme arbitrario di dimensione $k_x$ di figli $z$ tali che $F_z \neq \perp$.\\
-Se non esiste alcun insieme di questo tipo, allora la funzione ritorna $\perp$.\\
-Altrimenti
+Per ogni nodo figlio $z$ di $x$, $F_z = \decrypt(E,D,z)$.\\
+Considero i coefficienti di Lagrange :
+\[ \Delta_{i,S}(x) = \prod_{j \in S , j \neq i} \frac{x-j}{i-j} \]
+
+Sia $S_x$\label{insiemedecript} un insieme arbitrario di dimensione $k_x$ di figli $z$ tali che $F_z \neq \perp$.\\
+Se non esiste alcun insieme di questo tipo, allora la funzione ritorna $\perp$. Altrimenti
 \begin{align*}
 F_x &= \prod_{z \in S_x} F_z^{\Delta_{i,S_x^\prime}(0)} \qquad \text{ dove }
 \begin{matrix}

@@ -8,8 +8,8 @@ Scegliamo il gruppo ciclico $\mathbb{Z}_{p}$ con l'operazione $+$ e definiamo la
 Dove per $g^a$ intendiamo $a$ volte $g$.\\
 
 
-Un problema è la necessità di conoscere il valore $a$ tale che $g^a$ è il nostro valore scelto che risulta il logaritmo discreto che deve risultare difficile da calcolare per esser sicuro.\\
-Questo pairing è banale poiché la complessità del logaritmo discreto $h^a$ è equivalente ad eseguire l'algoritmo di euclide esteso per risolvere $a \times h + j \times p = k \times h^a$ trovando $j,k$.\\
+Un problema è la necessità di conoscere il valore $a$ tale che $g^a$ è il nostro valore scelto. Questo risulta calcolare il logaritmo discreto che deve risultare difficile da calcolare per esser sicuro.\\
+Questo pairing è quindi banale poiché la complessità del logaritmo discreto $h^a$ è equivalente ad eseguire l'algoritmo di Euclide esteso per risolvere $a \times h + j \times p = k \times h^a$ trovando $j,k$.\\
 
 
 Per utilizzi più sicuri e concreti vengono utilizzate curve ellittiche su campi finiti. Su queste viene creato un pairing sfruttando caratteristiche proprie delle curve ellittiche.\\
@@ -46,7 +46,7 @@ In questo modo, richiamando {\scshape generaPolinomi}($r$ radice dell'albero, $s
 
 Osserviamo che l'effettiva chiave privata che viene data all'utente è della forma $D = g^{\frac{q_x(0)}{t_i}}$ dove ci focaliziamo su $t_i$.\\
 In questa situazione, dobbiamo trovare la radice $t_i$-esima di $g$. Per rendere efficente l'utilizzo del sistema, è necessario tener conto di questo \emph{``problema''}.\\
-Nell'esempio semplificato, il calcolo della radice viene eseguito mediante l'algoritmo esteso di Euclide:
+Nell'esempio descritto in questa tesi, il calcolo della radice viene eseguito mediante l'algoritmo esteso di Euclide:
 
 \begin{center}
 \begin{tikzcd}
@@ -64,7 +64,7 @@ In questo modo troviamo la radice in una maniera efficiente.
 
 
 Per come è descritto il sistema, l'utente \textbf{non} è a conoscenza del gruppo $G_1$ su cui è definita la mappa bilineare ma conosce unicamente $G_2$ su cui esegue le operazioni per decrittare i messaggi.\\
-Per questo motivo un possibile attacco risulta molto articolato:
+Per questo motivo un possibile attacco risulta molto articolato:\label{security}
 \begin{enumerate}
    \item\textbf{ Logaritmo discreto su $G_2$}\\
    Si ricava il generatore $h$.

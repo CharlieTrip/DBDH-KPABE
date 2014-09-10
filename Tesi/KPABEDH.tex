@@ -2,12 +2,12 @@
 \subsection{Assunzione Diffie - Hellman}
 
 \begin{thm}
-Se un avversario può rompere lo schema in un modello ABE Selective-Set, allora un simulatore può esser costruito per giocare al gioco Decisional Bilinear Diffie Hellman con un vantaggio non trascurabile.
+Se un avversario può rompere lo schema in un modello ABE Selective-Set, allora un simulatore può esser costruito per giocare al gioco Decisionale Bilineare Diffie Hellman con un vantaggio non trascurabile.
 \begin{proof}
 Per dimostrare il teorema, supponiamo esista un avversario \evil{A} a tempo polinomiale che può rompere lo schema con un vantaggio $\epsilon$.\\
-Costruiamo quindi un simulatore \evil{B} capace di giocare al gioco D-BDH con un vantaggio di $\epsilon / 2$ in questo modo :\\[0,5cm]
+Costruiamo quindi un simulatore \evil{B} capace di giocare al gioco D-BDH con un vantaggio di $\epsilon / 2$ in questo modo :\\[0,2cm]
 
-Facciamo scegliere allo sfidante i gruppi $G_1, G_2$ con una mappa $e$ efficente e un generatore $g$.\\
+Facciamo scegliere allo sfidante i gruppi $G_1, G_2$ con una mappa $e$ efficente che rispetta \ref{pairinge} e un generatore $g$.\\
 Successivamente il simulatore lancia una moneta $\mu$ di cui risultato non viene rivelato allo sfidante.\\
 Se $ \mu = 0$ allora viene scelto $(A,B,C,Z) = (g^a,g^b,g^c,e(g,g)^{abc})$ altrimenti $(A,B,C,Z) = (g^a,g^b,g^c, e(g,g)^z)$ per dei valori $a,b,c,z$ casuali.\\
 Assumiamo l'insieme degli attributi \evil{U} definito.

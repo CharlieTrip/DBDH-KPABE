@@ -4,18 +4,18 @@ Consideriamo un insieme di parties $\{P_1, \cdots , P_n \}$ su cui costruiamo un
 In questo modo, un insieme $A$ è autorizzato dal sistema unicamente se è contenuto nella gerarchia $\mathbb{A}$.
 
 Nel nostro caso, il ruolo dei parties viene preso dagli attributi.
-
+\vspace{0.3cm}
 
 \begin{defi}
 Un \textbf{struttura d'accesso} è una collezione di sottoinsiemi non vuoti di parties $\mathbb{A} \subseteq 2^{\{ P_1,\cdots,P_n \}} \setminus \{ \emptyset \}$.\\
 Gli insiemi di $\mathbb{A}$ sono detti \textbf{insiemi autorizzati} e gli insiemi non in $\mathbb{A}$ sono detti \textbf{insiemi non autorizzati}.
 \end{defi}
-
+\vspace{0.3cm}
 \begin{defi}
 Una collezione $\mathbb{A} \subseteq 2^{\{P_1,\cdots,P_n\}}$ è detta \textbf{monotona} se per ogni $B,C$ sottoinsiemi di $\{ P_1,\cdots,P_n \}$ con $B \subseteq C$ e $B \in \mathbb{A}$ allora $C \in \mathbb{A}$.
 \end{defi}
 
-Nella nostra trattazione useremo sempre strutture d'accesso monotone.\\[0.8cm]
+Nella nostra trattazione useremo sempre strutture d'accesso monotone.\\[0.7cm]
 
 
 
@@ -41,24 +41,28 @@ Per poter valutare la sicurezza del sistema, si definisce un modello \textbf{sel
 \item[Fase 2 :] Come fase 1.
 \item[Guess :] \evil{E} ritorna una risposta $b^\prime$ rispetto a $b$
 \end{description}
+\vspace{0.2cm}
 
 Mediante questo gioco, il vantaggio dell'avversario \evil{A} è definito come \[\left\lvert \mathbb{P}(b = b^\prime) - \frac{1}{2}\right\rvert\]
+
+\vspace{0.3cm}
 
 \begin{defi}
 Uno schema KP-ABE è \textbf{sicuro} in un modello di sicurezza selective-set se ogni avversario a tempo polinomiale ha al massimo un vantaggio trascurabile nel gioco selective-set.
 \end{defi}
 
 dove definiamo
-\begin{defi}
-Tratto da \cite[Def~1.2]{crittoalice}.\\
+
+\begin{defi}[Avversario a tempo polinomiale] \cite[Def 1.2]{crittoalice}\\
 Un avversario \evil{A} è detto \textbf{avversario a tempo polinomiale} se usa nella sua logica un certo grado di randomicità (\evil{A} è quindi probabilistico) e se l'esecuzione di \evil{A} termina in un numero di passi $t$ polinomiale rispetto alla lunghezza dell'input. 
 \end{defi}
 
 \vspace{0.5cm}
-Considerando la mappa bilineare non degenere $e:G_1 \times G_1 \rightarrow G_2$, il nostro obbiettivo è di dimostrare
 
-\begin{assu}[Decisionale Bilineare Diffie - Hellman]
-Siano $a,b,c,z \in \mathbb{Z}_p$ scelti casualmente e sia $g$ un generatore di $G_1$ ciclico dove $p$ è l'ordine di $G_1$\\
+Considerando la mappa bilineare non degenere $e:G_1 \times G_1 \rightarrow G_2$, il nostro obbiettivo è di dimostrare
+\vspace{0.2cm}
+\begin{assu}[Bilineare Decisionale  Diffie - Hellman]
+\-\\Siano $a,b,c,z \in \mathbb{Z}_p$ scelti casualmente e sia $g$ un generatore di $G_1$ ciclico dove $p$ è l'ordine di $G_1$\\
 Nessun algoritmo $\mathcal{B}$ a tempo polinomiale probabilistico può distinguere tra le tuple
 \[ (A = g^a , B = g^b , C = g^c , e(g,g)^{abc}) \qquad (A = g^a , B = g^b , C = g^c , e(g,g)^{z}) \]
 con al più un vantaggio trascurabile.\\
