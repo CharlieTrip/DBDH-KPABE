@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Bootstrap Template</title>
+    <title>Attribute Based Encription</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
+    <link href="{{ url_for('static', filename='css/abe.css') }}" rel="stylesheet" media="screen">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="../../assets/js/html5shiv.js"></script>
@@ -12,8 +12,100 @@
     <![endif]-->
   </head>
   <body>
-    <div class ="container">
-      <h1>Work in Progress</h1>
-    </div>
+
+  <div class="col-md-1"></div>
+  <div class="col-md-6">
+	    <div class="row">
+	    <div class ="invio">
+	      <div class="messaggio">
+	      	Messaggio da inviare - numerico da 1 a 100 <br>
+	      	<input type="number" id="messaggio" name="messaggio"  min="1" max="100" value="1" required/> <br>
+	      </div>
+	      <div class="attrib" id="attrib">
+	      	Attributi del messaggio<br>
+		      <input type="checkbox" name="att[]" value="0"> 0 
+		      <input type="checkbox" name="att[]" value="1"> 1 
+		      <input type="checkbox" name="att[]" value="2"> 2 
+		      <input type="checkbox" name="att[]" value="3"> 3 
+		      <input type="checkbox" name="att[]" value="4"> 4 
+	      </div>
+	      <input type="button" class="btn btn-default" value="Invia" onclick="inviaMessaggio()"/>
+	    </div>
+	    </div>
+
+	    <div class="row">
+	    <div class ="crittato">
+	      Att : <span id='attributi'></span> <br> <div class='crit' id='crit'></div>
+	    </div>
+	    </div>
+
+	    <div class="row">
+	    <div class ="ricezione">
+	      <div class="row">
+		      <div class="albero">
+		      	0 AND 2 <br>
+		      	Messaggio ricevuto <br>
+		      	<div class='crit' id="alb1"></div>
+		      	<div id="mess"></div>
+		      </div>
+		      <div class="albero">
+		      	(0 OR 2) AND 3 <br>
+		      	Messaggio ricevuto <br>
+		      	<div class='crit' id="alb2"></div>
+		      </div>
+	      </div>
+	    </div>
+	    </div>
+	</div>
+
+
+  <script src="{{ url_for('static', filename='js/jquery-1.11.1.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
+  
   </body>
+	<script type="text/javascript">
+	function inviaMessaggio() {
+
+
+		$("div#attributi").hide().fadeOut('slow');
+ 		$("div#crit").hide().fadeOut('slow');
+ 		$("div#alb1").hide().fadeOut('slow');
+ 		$("div#alb2").hide().fadeOut('slow');
+
+		var chkElem = document.getElementsByName("att[]");
+		var chk = "";
+			for(var i=0; i< chkElem.length; i++)
+	            {
+	                if(chkElem[i].checked)
+	                    chk = chk + (chkElem[i].value);
+	            }
+
+		if (chk.length > 0){
+				
+	        postDataa = {};
+	        postDataa['messaggio'] = $("#messaggio").val(); 
+	        postDataa['attributi'] = chk
+	        postData = JSON.stringify(postDataa);
+			$("span#attributi").text(chk).hide().fadeIn('slow')
+	        var all = $.ajax({
+			  type: "POST",
+			  url: '/crypto',
+			  data : postData,
+			  dataType: "json",  
+			  contentType: "application/json"
+			});
+			all.done(function(data){
+	 			$("div#crit").text(data.messaggio).hide().fadeIn('slow');
+	 			$("div#alb1").text(data.alb1).hide().fadeIn('slow');
+	 			$("div#alb2").text(data.alb2).hide().fadeIn('slow');
+			});
+        }
+        else{
+        	$("#attrib").fadeIn(300).fadeOut(300).fadeIn(300);
+        }
+
+	}
+
+  	</script>
 </html>

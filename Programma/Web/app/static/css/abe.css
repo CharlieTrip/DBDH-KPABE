@@ -1,0 +1,67 @@
+*{
+    font-family:Verdana,Helvetica;
+    text-align: center;
+	font-size:13px;
+}
+
+input{
+	font-size:16px;
+	padding: 10px;
+	margin : 10px;
+}
+
+.invio {
+	width: 90%;
+	background-color: #eee;
+    border: 8px solid #428bca;
+    border-radius: 30px;
+	padding:10px;
+	display: block;
+	vertical-align: middle;
+	margin: 10px;
+}
+.crittato {
+	height: 150px;
+	width: 90%;
+	background-color: #eee;
+    border: 8px solid #f0ad4e;
+    border-radius: 30px;
+	padding:10px;
+	display: block;
+	vertical-align: middle;
+	margin: 10px;
+}
+.ricezione {
+	width: 90%;
+	height: 200px;
+	background-color: #eee;
+    border: 8px solid #5cb85c;
+    border-radius: 30px;
+	padding:10px;
+	display: block;
+	vertical-align: middle;
+	margin: 10px;
+}
+
+.albero {
+	width: 40%;
+	background-color: #eee;
+    border: 4px solid #5cb85c;
+    border-radius: 15px;
+	padding: 15px;
+	display: inline-block;
+	vertical-align: middle;
+	margin : 30px;
+
+}
+.attrib , .messaggio{
+	margin: 10px;
+	padding : 10px;
+}
+
+.crit{
+
+	font-weight: bold;
+	font-size: 25px;
+	color: #428bca;
+}
