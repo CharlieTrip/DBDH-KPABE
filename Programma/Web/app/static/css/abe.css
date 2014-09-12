@@ -1,13 +1,30 @@
 *{
     font-family:Verdana,Helvetica;
     text-align: center;
-	font-size:13px;
+	font-size:15px;
 }
 
 input{
 	font-size:16px;
 	padding: 10px;
 	margin : 10px;
+}
+
+h2{
+	font-variant: small-caps;
+	font-weight: bold;
+}
+
+.info {
+	width: 90%;
+	height: 80%;
+	background-color: #eee;
+    border: 8px solid #006600;
+    border-radius: 30px;
+	padding:10px;
+	display: block;
+	vertical-align: middle;
+	margin: 10px;
 }
 
 .invio {
@@ -21,6 +38,8 @@ input{
 	margin: 10px;
 }
 .crittato {
+	font-weight: bold;
+	font-size: 20px;
 	height: 150px;
 	width: 90%;
 	background-color: #eee;
@@ -30,10 +49,10 @@ input{
 	display: block;
 	vertical-align: middle;
 	margin: 10px;
+	font-variant: small-caps;
 }
 .ricezione {
-	width: 90%;
-	height: 200px;
+	font-size: 25px;	width: 90%;
 	background-color: #eee;
     border: 8px solid #5cb85c;
     border-radius: 30px;
@@ -41,10 +60,12 @@ input{
 	display: block;
 	vertical-align: middle;
 	margin: 10px;
+	font-variant: small-caps;
+	font-weight: bold;
+
 }
 
 .albero {
-	width: 40%;
 	background-color: #eee;
     border: 4px solid #5cb85c;
     border-radius: 15px;
@@ -52,11 +73,15 @@ input{
 	display: inline-block;
 	vertical-align: middle;
 	margin : 30px;
+	font-size: 20px;
 
 }
 .attrib , .messaggio{
 	margin: 10px;
 	padding : 10px;
+	font-variant: small-caps;
+	font-weight: bold;
+	font-size: 20px;
 }
 
 .crit{
@@ -65,3 +90,10 @@ input{
 	font-size: 25px;
 	color: #428bca;
 }
+.logic{
+
+	font-weight: bold;
+	font-size: 25px;
+	color: #C92020;
+}
+

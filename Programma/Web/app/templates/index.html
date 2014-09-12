@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Attribute Based Encription</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
     <link href="{{ url_for('static', filename='css/abe.css') }}" rel="stylesheet" media="screen">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -13,50 +13,86 @@
   </head>
   <body>
 
-  <div class="col-md-1"></div>
-  <div class="col-md-6">
-	    <div class="row">
-	    <div class ="invio">
-	      <div class="messaggio">
-	      	Messaggio da inviare - numerico da 1 a 100 <br>
-	      	<input type="number" id="messaggio" name="messaggio"  min="1" max="100" value="1" required/> <br>
-	      </div>
-	      <div class="attrib" id="attrib">
-	      	Attributi del messaggio<br>
-		      <input type="checkbox" name="att[]" value="0"> 0 
-		      <input type="checkbox" name="att[]" value="1"> 1 
-		      <input type="checkbox" name="att[]" value="2"> 2 
-		      <input type="checkbox" name="att[]" value="3"> 3 
-		      <input type="checkbox" name="att[]" value="4"> 4 
-	      </div>
-	      <input type="button" class="btn btn-default" value="Invia" onclick="inviaMessaggio()"/>
-	    </div>
-	    </div>
+  	<div class="col-md-4">
+	  	<div class="info">
+	  		<h2> Attribute Based Encryption </h2> <br>
+	  		Questa applicazione nasce dallo studio del paper <a href="http://research.microsoft.com/en-us/um/people/vipul/abe.pdf" target="_blank">Attribute-Based Encryption for Fine-Grained Access Control of Encrypted Data</a> ed è un esempio di funzionamento. <br><br>
 
-	    <div class="row">
-	    <div class ="crittato">
-	      Att : <span id='attributi'></span> <br> <div class='crit' id='crit'></div>
-	    </div>
-	    </div>
+	  		Nel primo blocco è possibile inserire il messaggio (valore numerico da 1 a 100) che si vuole comunicare.<br>
+	  		Successivamente si selezionano gli attributi con il quale si vuole cripatare il messaggio.<br>
+	  		<br>
+	  		Premendo invia, viene calcolato il messaggio cifrato mostrato nel secondo blocco.<br>
+	  		<br>
+	  		Nel terzo blocco, vengono visualizzati due alberi pre-impostati nel sistema e il messaggio da loro decifrato.<br>
+	  		Se il messaggio ricevuto è <b>-1</b>, vuol dire che non si è autorizzati a decifrare il messaggio.<br>
+	  		<br>
+	  		<br>
+	  		L'applicazione <b>non</b> è stata creata per puro scopo illustrativo dello schema ABE.
 
-	    <div class="row">
-	    <div class ="ricezione">
-	      <div class="row">
-		      <div class="albero">
-		      	0 AND 2 <br>
-		      	Messaggio ricevuto <br>
-		      	<div class='crit' id="alb1"></div>
-		      	<div id="mess"></div>
+
+	  		<br><br>
+	  		Applicazione scritta da <a href="https://www.linkedin.com/profile/view?id=330338466">Brunetta Carlo</a>.<br>
+	  		Lavoro svolto per la tesi di laurea triennale in Matematica.
+	  	</div>
+  	</div>
+
+  	<div class="col-md-1">
+  	</div>
+
+  	<div class="col-md-7">
+
+  		<div class="row">
+
+		    <div class ="invio">
+		      <div class="messaggio">
+		      	Messaggio da inviare - numerico da 1 a 100 <br>
+		      	<input type="number" id="messaggio" name="messaggio"  min="1" max="100" value="1" required/> <br>
 		      </div>
-		      <div class="albero">
-		      	(0 OR 2) AND 3 <br>
-		      	Messaggio ricevuto <br>
-		      	<div class='crit' id="alb2"></div>
+		      <div class="attrib" id="attrib">
+		      	Attributi del messaggio<br>
+			      <input type="checkbox" name="att[]" value="0"> 0 
+			      <input type="checkbox" name="att[]" value="1"> 1 
+			      <input type="checkbox" name="att[]" value="2"> 2 
+			      <input type="checkbox" name="att[]" value="3"> 3 
+			      <input type="checkbox" name="att[]" value="4"> 4 
 		      </div>
-	      </div>
-	    </div>
-	    </div>
-	</div>
+		      <input type="button" class="btn btn-default" value="Invia" onclick="inviaMessaggio()"/>
+		    </div>
+
+		</div>
+
+
+		<div class="row">
+
+		    <div class ="crittato">
+		      Att : <span id='attributi'></span> <br>
+		      Messaggio crittato : <div class='crit' id='crit'></div>
+		    </div>
+
+		</div>
+
+		<div class="row">
+	    
+		    <div class ="ricezione">
+		      <div class="row">
+			      <div class="albero">
+			      	<span class="logic">0 AND 2</span> <br>
+			      	Messaggio ricevuto <br>
+			      	<div class='crit' id="alb1"></div>
+			      	<div id="mess"></div>
+			      </div>
+			      <div class="albero">
+			      	<span class="logic">(0 OR 2) AND 3 </span><br>
+			      	Messaggio ricevuto <br>
+			      	<div class='crit' id="alb2"></div>
+			      </div>
+		      </div>
+		    </div>
+
+		</div>
+
+
+  	</div>
 
 
   <script src="{{ url_for('static', filename='js/jquery-1.11.1.min.js') }}"></script>
