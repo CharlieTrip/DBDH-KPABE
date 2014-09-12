@@ -3,7 +3,7 @@
 
 
 \section{Efficienza}
-Come definito in \cite[4.3]{kpabe}, lo schema risulta complesso in maniera lineare rispetto alla grandezza del gruppo $G_1$ con una nota particolare sulla funzione di decrittazione.\\
+Come definito nell'articolo \cite[4.3]{kpabe}, lo schema risulta complesso in maniera lineare rispetto alla grandezza del gruppo $G_1$ con una nota particolare sulla funzione di decrittazione.\\
 Come descritto in \ref{insiemedecript}, dobbiamo scegliere un insieme $S_x$ di nodi su cui effettueremo la decifrazione.\\
 La possibilità di scegliere questo insieme ci permettere di diminuire il numero di conti effettuati: vengono scelti i nodi con indice minore così da facilitare il calcolo dei coefficenti di Lagrange.\\
 In ugual modo, conviene raccogliere i coefficenti di Lagrange per eseguire il minor numero di esponenziali possibili.
@@ -20,12 +20,12 @@ Il motivo principale è che è ancora prematuro valutare il livello di sicurezza
 Durante lo studio del paper \cite{kpabe}, sono stati trovati altri paper, come \cite{sssth} o \cite{benoit}, che trattavano lo stesso problema con delle piccole variazioni:
 \begin{itemize}
 	\item \textbf{Identity Based Encryption} : Hanno una struttura molto simile a quella ABE con la differenza che l'attributo viene sostituito dall'identità dell'utente. Questo comporta che la propria identità, figurata come un indirizzo IP, una mail o qualcosa di simile, diventa la policy di decodifica.\\
-	Questo comporta la necessità di avere un ente che garantisce e certifica l'identità della persone che utilizzano il sistema.
-	\item \textbf{Hash degli attributi} : alcune applicazioni \cite{kpabe2} sulla famiglia dei Ciphertext-Policy ABE, presentano una funzione di hash degli attributi che vengono resi pubblici.\\  In questo modo è impossibile per l'utente apprendere quali sono gli attributi del sistema perché :
+	Questo comporta la necessità di avere un ente per certificare l'identità della persone che utilizzano il sistema.
+	\item \textbf{Hash degli attributi} : alcune applicazioni \cite{kpabe2} sulla famiglia dei Ciphertext-Policy ABE, presentano una funzione di hash degli attributi che vengono resi pubblici.\\  In questo modo è impossibile per l'utente apprendere quali siano gli attributi del sistema perché :
 	\begin{itemize}
 		\item Gli attributi che l'utente ha sono conosciuti sia in chiaro che hashati
 		\item Gli attributi che l'utente non ha sono conosciuti solo nella forma hashata
 	\end{itemize}
-	Nei Key-Policy ABE, è necessario conoscere l'attributo in chiaro del messaggio cifrato per poter eseguire la verifica rispetto alle policy.
+	Nei Key-Policy ABE, è necessario conoscere l'attributo in chiaro del messaggio cifrato per poter eseguire la verifica rispetto alle policy della chiave.
 	\item \textbf{Spostare il calcolo} : alcuni paper spostano il calcolo tra i vari algoritmi. Nonostante la differenza di forma, la struttura rimane invariata.
 \end{itemize}

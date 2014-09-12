@@ -23,8 +23,8 @@ Nella nostra trattazione useremo sempre strutture d'accesso monotone.\\[0.7cm]
 La struttura di uno schema KP-ABE prevede 4 algoritmi:
 \begin{description}
 \item[Impostazione :] Algoritmo con in ingresso unicamente i parametri di sicurezza impliciti del sistema. Ritorna le chiavi publiche \pk e la chiave principale \mk.
-\item[Criptare :] Algoritmo che riceve un messaggio $m$, un insieme di attributi $\gamma$ e i parametri pubblici \pk. Ritorna il messaggio criptato $E$.
-\item[Generazione chiavi :] Algoritmo che partendo da una struttura d'accesso $\mathbb{A}$, la chiave principale \mk e le chiavi pubbliche , fornisce una chiave di decifrazione $D$.
+\item[Criptare :] Algoritmo che riceve un messaggio $m$, i parametri pubblici \pk ed un insieme di attributi $\gamma$. Ritorna il messaggio criptato $E$.
+\item[Generazione chiavi :] Algoritmo che partendo da una struttura d'accesso $\mathbb{A}$, la chiave principale \mk e le chiavi pubbliche, fornisce una chiave di decifrazione $D$.
 \item[Decifrare :]L'algoritmo riceve in input il messaggio criptato $E$ che è stato criptato in un insieme d'attributi $\gamma$, la chiave di decifrazione $D$ per l'accesso alla struttura $\mathbb{A}$ e i parametri pubblici \pk.\\
 Ritornerà il messaggio $M$ se $\gamma \in \mathbb{A}$
 \end{description}
